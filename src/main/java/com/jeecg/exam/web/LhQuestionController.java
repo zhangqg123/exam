@@ -30,7 +30,7 @@ import com.jeecg.exam.service.LhQuestionColumnService;
 import com.jeecg.exam.service.LhQuestionService;
 
  /**
- * 描述：试题表
+ * 描述：试题表 
  * @author: www.jeecg.org
  * @since：2018年12月24日 09时58分22秒 星期一 
  * @version:1.0
