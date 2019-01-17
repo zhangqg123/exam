@@ -1,0 +1,244 @@
+#parse("content/base/back/common/macro.vm")
+<!DOCTYPE html>
+<html lang="en">
+#parse("content/base/back/common/head.vm")
+<body style='overflow:scroll;overflow-x:hidden'>
+	<div class="container bs-docs-container" style="width:100%;">
+		<div class="row">
+			<form role="form" class="form-inline" action="$!{basePath}/jeecg/lhExamQuestion.do?list" method="post"  id="formSubmit">
+				<div  class="col-md-10" style="width:100%">
+					<div class="panel panel-default">
+						<div class="panel-heading">列表</div>
+						<div class="panel-body">
+												<input type="hidden" name="examId" id="examId" value="$!{exam.id}">
+						<!--	<div class="search">
+										 <div class="form-group col-sm-3">
+											<label for="examId" class="control-label col-sm-3 line34">考试编号</label>
+											<div class="col-sm-8">
+												<input type="text" name="examId" id="examId" value="$!{lhExamQuestion.examId}" class="form-control">
+											</div>
+										 </div>
+										 <div class="form-group col-sm-3">
+											<label for="questionId" class="control-label col-sm-3 line34">题目编号</label>
+											<div class="col-sm-8">
+												<input type="text" name="questionId" id="questionId" value="$!{lhExamQuestion.questionId}" class="form-control">
+											</div>
+										 </div>	
+								<button type="submit" class="btn btn-primary"><i class="fa fa-search"></i> 搜  索</button>
+								<button type="button" class="btn btn-primary" onclick="searchReset()"><i class="fa fa-refresh"></i> 重  置</button>
+								<div class="clearfix"></div>
+										 </div>	-->
+							<div id="legend">
+								<legend  class="le">
+									<button type="button" class="btn btn-primary" onclick="questionlist('试题列表');" ><i class="fa fa-plus"></i> 选题</button> 
+									<button type="button" class="btn btn-primary" onclick="batchDelete()" ><i class="fa fa-trash-o"></i> 批量删除</button>
+									<button type="button" class="btn btn-default" onclick="doUrl('$!{basePath}/jeecg/lhExam.do?list')" ><i class="fa fa-trash-o"></i> 返回</button>
+								</legend>
+							</div>
+							<table class="table table-striped">
+								<thead>
+									<th>
+											<input type="checkbox" name="ckAll" id="ckAll" />
+					        		</th>
+											<th>考试名称</th>
+											<th>考题简介</th>
+									<th>操作</th>
+								</thead>
+								<tbody>
+								#if($!{pageInfos})
+									#foreach($!{info} in $!{pageInfos})
+										<tr>	
+											<td>
+													<input type="checkbox" name="ck" id="ck_$!{velocityCount}" value="$!{info.id}"/>
+											</td>	
+														<td>$!{exam.examName}</td>
+														<td>
+														
+														 #foreach($question in $questionList)
+															#if($!{info.questionId} == ${question.id})
+																$!{question.summary}
+															#end
+														 #end
+														</td>
+											<td class="last">
+											<a class="btn btn-success btn-xs"  href="javascript:doUrl('$!{basePath}/jeecg/lhExamQuestion.do?toEdit&id=$!{info.id}')" ><i class="fa fa-edit"></i> 编辑</a>
+											<a class="btn btn-danger btn-xs" href="javascript:delData('$!{basePath}/jeecg/lhExamQuestion.do?doDelete&id=$!{info.id}')"><i class="fa fa-trash-o"></i> 删除</a>
+											</td>
+										</tr>
+									 #end
+								 #end
+								</tbody>
+							</table>
+							<div class="text-right">
+								<!--公用翻页代码-->
+								#set($attr='formSubmit')
+								#showPageList($pageInfos $attr)
+								<!--END公用翻页代码-->
+							</div>
+						</div>
+					</div>
+				</div>  
+			</form>
+		</div>
+	</div>
+    <!-- Modal -->
+    <div class="modal fade" id="privilegeTreeModal" tabindex="-1" role="dialog"
+    	aria-labelledby="privilegeTreeModalLabel" aria-hidden="true">
+    	<div class="modal-dialog">
+    		<div class="modal-content" style="width: 170%;left: -35%;">
+    			<div class="modal-header">
+    				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    				<h4 class="modal-title" id="privilegeTreeModalLabel">试题列表</h4>
+    			</div>
+    			<div class="modal-body">
+    				<iframe name="selectUsers" id="selectUsers" width="100%" height="270px" frameborder="0" scrolling="auto" src="lhQuestion.do?questionList&examId=$!{exam.id}"></iframe>
+    			</div>
+    			<div class="modal-footer">
+    				<button type="button" class="btn btn-default" id="dialogFormClose" data-dismiss="modal">关闭</button>
+    				<button type="button" class="btn btn-default" onclick="CheckAll();" data-dismiss="modal">确定</button>
+    			</div>
+    		</div><!-- /.modal-content -->
+    	</div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+</body>
+</html>
+<script>
+$("#ckAll").click(function(){ 
+	if($(this).prop("checked")){ 
+	 $(":checkbox").prop("checked",true) 
+	}else{ 
+	$(":checkbox").prop("checked",false)  
+	} 
+}); 
+
+//jquery获取复选框值    
+function getCkValue(){  
+  var chk_value =[];    
+  $('input[name="ck"]:checked').each(function(){    
+   chk_value.push($(this).val());    
+  });    
+  //alert(chk_value.length==0 ?'你还没有选择任何内容！':chk_value);    
+}
+//获得所有选中行的ID进行批量删除
+function batchDelete() {
+    var ids = [];
+    var check = document.getElementsByName("ck");
+    for(var i=0;i<check.length;i++){
+        if(check[i].checked){
+    		ids.push(check[i].value);
+        }
+    }
+   	if(ids.length > 0) {
+    	parent.layer.confirm('确认进行批量删除吗？', {
+        	btn: ['确定','取消'] //按钮
+    	}, function(){
+       		jQuery.ajax({
+       			url : '$!{basePath}/jeecg/lhExamQuestion.do?batchDelete',
+       			data : {
+       				ids : ids,
+       			},
+       			type : 'POST',
+    			dataType: 'json',
+       			traditional:true,
+    			success:function(data) {
+    				if(data.success){
+    					parent.layer.alert(data.msg, {
+    	        	        icon: 1,
+    	        	        shadeClose: false,
+    	        	        title: '提示'
+    	        	    },function(index){
+    						document.getElementById('formSubmit').submit();
+    	        	    	parent.layer.close(index);
+    					});
+    				}else {
+    					layeralert(data.msg,0);
+    				}
+    			},
+    			error: function(data, status, e){  
+    	        	if(data.status == "401"){
+    	        		layeralert("没有权限！",0);
+    					return;
+    				}
+    	        }
+       		});
+		});
+   	}else {
+		layeralert("您还没有选择要删除的行");
+   	}
+}
+//重置按钮    
+function searchReset() {
+	$("#formSubmit").find(":input").val("");
+	$("#formSubmit").submit();
+}
+
+//把用户列表页面用弹出框的形式展现出来,在model里面添加添加iframe
+function questionlist(title){
+/*
+  var url="groupMsg.do?getUserList";
+  if(url.indexOf('?')>-1){
+ 		url += '&t=' + Math.random(1000);  
+ 	}else{
+ 		url += '?t=' + Math.random(1000);  
+ 		}
+ 	$('#privilegeTreeModalLabel').html(title);
+ 	jQuery.ajax({
+        url: url,
+      	cache: false,
+	  	dataType: "html",
+      	success: function(data){
+            }
+      });  
+*/
+      $('#privilegeTreeModal').modal({show:true,backdrop:false});
+}
+function CheckAll(){
+
+    var ids = [];
+    var check = document.getElementById('selectUsers').contentWindow.document.getElementsByName("ck");
+    for(var i=0;i<check.length;i++){
+        if(check[i].checked){
+    		ids.push(check[i].value);
+        }
+    }
+   	if(ids.length > 0) {
+    	parent.layer.confirm('确认选题吗？', {
+        	btn: ['确定','取消'] //按钮
+    	}, function(){
+       		jQuery.ajax({
+       			url : '$!{basePath}/jeecg/lhExamQuestion.do?batchSelect',
+       			data : {
+       				ids : ids,
+					examId : '$!{exam.id}',
+       			},
+       			type : 'POST',
+    			dataType: 'json',
+       			traditional:true,
+    			success:function(data) {
+    				if(data.success){
+    					parent.layer.alert(data.msg, {
+    	        	        icon: 1,
+    	        	        shadeClose: false,
+    	        	        title: '提示'
+    	        	    },function(index){
+    						document.getElementById('formSubmit').submit();
+    	        	    	parent.layer.close(index);
+    					});
+    				}else {
+    					layeralert(data.msg,0);
+    				}
+    			},
+    			error: function(data, status, e){  
+    	        	if(data.status == "401"){
+    	        		layeralert("没有权限！",0);
+    					return;
+    				}
+    	        }
+       		});
+		});
+   	}else {
+		layeralert("您还没有选择要删除的行");
+   	}
+}
+
+</script>

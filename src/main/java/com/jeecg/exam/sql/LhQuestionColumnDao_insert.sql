@@ -1,0 +1,23 @@
+INSERT  INTO
+	lh_question_column
+      ( 
+      ID                            
+      ,IMAGE_HREF                     
+      ,IMAGE_NAME                     
+      ,COLUMN_NAME                    
+      ,TYPE                           
+      ,PARENT_CODE                    
+      ,HREF                           
+      ,OWNER                          
+      ) 
+values
+      (
+      :lhQuestionColumn.id                            
+      ,:lhQuestionColumn.imageHref                     
+      ,:lhQuestionColumn.imageName                     
+      ,:lhQuestionColumn.columnName                    
+      ,:lhQuestionColumn.type                          
+      ,:lhQuestionColumn.parentCode                    
+      ,:lhQuestionColumn.href                          
+      ,:lhQuestionColumn.owner                         
+      )

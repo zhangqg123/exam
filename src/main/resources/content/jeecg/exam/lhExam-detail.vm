@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+#parse("content/base/back/common/head.vm")
+<body style='overflow:scroll;overflow-x:hidden'>
+	<div class="container bs-docs-container" style="width:100%;">
+		<div class="row">
+			<div class="panel panel-default">
+				<div class="panel-heading">详情</div>
+				<div class="panel-body">
+					<form class="form-horizontal" role="form">
+						<fieldset disabled>
+																		<div class="form-group mno">
+												<label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">考试名称</label>
+												<div class="col-sm-2">
+													<input type="text" value="$!{lhExam.examName}" name="examName" id="examName" class="form-control" />
+												</div>
+											</div>
+											<div class="form-group mno">
+												<label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">试题编号</label>
+												<div class="col-sm-2">
+													<input type="text" value="$!{lhExam.questionId}" name="questionId" id="questionId" class="form-control" />
+												</div>
+											</div>
+											<div class="form-group mno">
+												<label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">分数</label>
+												<div class="col-sm-2">
+													<input type="text" value="$!{lhExam.score}" name="score" id="score" class="form-control" />
+												</div>
+											</div>
+											<div class="form-group mno">
+												<label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">题目个数</label>
+												<div class="col-sm-2">
+													<input type="text" value="$!{lhExam.questionNumber}" name="questionNumber" id="questionNumber" class="form-control" />
+												</div>
+											</div>
+											<div class="form-group mno">
+												<label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">考试类型</label>
+												<div class="col-sm-2">
+													<input type="text" value="$!{lhExam.examType}" name="examType" id="examType" class="form-control" />
+												</div>
+											</div>
+											<div class="form-group mno">
+												<label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">答题时间</label>
+												<div class="col-sm-2">
+													<input type="text" value="$!{lhExam.answerTime}" name="answerTime" id="answerTime" class="form-control" />
+												</div>
+											</div>
+											<div class="form-group mno">
+												<label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">考试次数</label>
+												<div class="col-sm-2">
+													<input type="text" value="$!{lhExam.number}" name="number" id="number" class="form-control" />
+												</div>
+											</div>
+											<div class="form-group mno">
+												<label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">创建人id</label>
+												<div class="col-sm-2">
+													<input type="text" value="$!{lhExam.createBy}" name="createBy" id="createBy" class="form-control" />
+												</div>
+											</div>
+											<div class="form-group mno">
+												<label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">创建日期</label>
+												<div class="col-sm-2">
+													<input type="text" value="$!dateTool.format("yyyy-MM-dd",$!{lhExam.createDate})" name="createDate" id="createDate" class="form-control" />
+												</div>
+											</div>
+											<div class="form-group mno">
+												<label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">备注</label>
+												<div class="col-sm-2">
+													<input type="text" value="$!{lhExam.remark}" name="remark" id="remark" class="form-control" />
+												</div>
+											</div>
+											<div class="form-group mno">
+												<label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">正确答案</label>
+												<div class="col-sm-2">
+													<input type="text" value="$!{lhExam.rightAnswer}" name="rightAnswer" id="rightAnswer" class="form-control" />
+												</div>
+											</div>
+						</fieldset>
+						<div class="form-group mno">
+							<div class="col-sm-offset-1 col-sm-6">
+								<button type="button" class="btn btn-default" id="formReturn" data-dismiss="modal" onclick="doUrl('$!{basePath}/jeecg/lhExam.do?list')"><i class="fa fa-arrow-circle-left"></i> 返回</button>
+							 </div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

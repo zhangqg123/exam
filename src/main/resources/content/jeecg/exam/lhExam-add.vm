@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+#parse("content/base/back/common/head.vm")
+<body style='overflow:scroll;overflow-x:hidden'>
+	<div class="container bs-docs-container" style="width:100%;">
+		<div class="row">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+								<button type="button" class="btn btn-primary" id="formSubmit"><span class="fa fa-save"></span> 保存</button>
+				<button type="button" class="btn btn-default" id="formReturn" data-dismiss="modal" onclick="doUrl('$!{basePath}/jeecg/lhExam.do?list')"><span class="fa fa-arrow-circle-left"></span> 返回</button>
+				</div>
+				<div class="panel-body">
+					<form class="form-horizontal" role="form" id="dailogForm" action="$!{basePath}/jeecg/lhExam.do?doAdd" method="POST">
+						<input type="hidden" id="btn_sub" class="btn_sub" />
+									<div class="form-group mno">
+										<label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">考试名称</label>
+										<div class="col-sm-8">
+											<input type="text" value="$!{lhExam.examName}" name="examName" id="examName" class="form-control" />
+										</div>
+									</div>
+									<div class="form-group mno">
+										<label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">考题分类</label>
+										<div class="col-sm-8">
+									<!--		<input type="text" value="$!{lhExam.questionColumn}" name="questionColumn" id="questionColumn" class="form-control" />	-->
+											<select id="questionColumn" name="questionColumn"  class="form-control">
+											 <option value="" >分类</option>
+											 #foreach($column in $columnList)
+												<option value="${column.id}" >--$!{column.columnName}</option>
+											 #end
+											</select>
+										</div>
+									</div>
+									<div class="form-group mno">
+										<label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">分数</label>
+										<div class="col-sm-8">
+											<input type="text" value="$!{lhExam.score}" name="score" id="score" class="form-control" />
+										</div>
+									</div>
+									<div class="form-group mno">
+										<label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">题目个数</label>
+										<div class="col-sm-8">
+											<input type="text" value="$!{lhExam.questionNumber}" name="questionNumber" id="questionNumber" class="form-control" />
+										</div>
+									</div>
+									<div class="form-group mno">
+										<label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">考试类型</label>
+										<div class="col-sm-8">
+											<input type="text" value="$!{lhExam.examType}" name="examType" id="examType" class="form-control" />
+										</div>
+									</div>
+									<div class="form-group mno">
+										<label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">答题时间</label>
+										<div class="col-sm-8">
+											<input type="text" value="$!{lhExam.answerTime}" name="answerTime" id="answerTime" class="form-control" />
+										</div>
+									</div>
+									<div class="form-group mno">
+										<label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">考试次数</label>
+										<div class="col-sm-8">
+											<input type="text" value="$!{lhExam.number}" name="number" id="number" class="form-control" />
+										</div>
+									</div>
+						<!--		<div class="form-group mno">
+										<label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">创建人id</label>
+										<div class="col-sm-8">
+											<input type="text" value="$!{lhExam.createBy}" name="createBy" id="createBy" class="form-control" />
+										</div>
+									</div>
+									<div class="form-group mno">
+										<label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">创建日期</label>
+										<div class="col-sm-8">
+											<input type="text" value="$!dateTool.format("yyyy-MM-dd",$!{lhExam.createDate})" name="createDate" id="createDate" class="form-control" onFocus="WdatePicker({dateFmt:'yyyy-MM-dd'})"   style="background: url('$!{basePath}/plug-in-ui/images/datetime.png') no-repeat scroll right center transparent;" />
+										</div>
+									</div>	-->
+									<div class="form-group mno">
+										<label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">备注</label>
+										<div class="col-sm-8">
+											<input type="text" value="$!{lhExam.remark}" name="remark" id="remark" class="form-control" />
+										</div>
+									</div>
+									<div class="form-group mno">
+										<label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">正确答案</label>
+										<div class="col-sm-8">
+											<input type="text" value="$!{lhExam.rightAnswer}" name="rightAnswer" id="rightAnswer" class="form-control" />
+										</div>
+									</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
+<script type="text/javascript" src="$!{basePath}/plug-in-ui/js/Validform_v5.3.2.js"></script> 
+<script type="text/javascript" src="$!{basePath}/plug-in-ui/js/forminit.p3.js"></script> 

@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+#parse("content/base/back/common/head.vm")
+<!--UEditor-->
+<script type="text/javascript"  charset="utf-8" src="$!{basePath}/plug-in/ueditor/ueditor.config.js"></script>
+<script type="text/javascript"  charset="utf-8" src="$!{basePath}/plug-in/ueditor/ueditor.all.min.js"></script>
+<script type="text/javascript" charset="utf-8" src="$!{basePath}/plug-in/ueditor/lang/zh-cn/zh-cn.js"></script>
+<script type="text/javascript" charset="utf-8" src="$!{basePath}/plug-in/ueditor/kityformula-plugin/addKityFormulaDialog.js"></script>
+<script type="text/javascript" charset="utf-8" src="$!{basePath}/plug-in/ueditor/kityformula-plugin/getKfContent.js"></script>
+<script type="text/javascript" charset="utf-8" src="$!{basePath}/plug-in/ueditor/kityformula-plugin/defaultFilterFix.js"></script><body style='overflow:scroll;overflow-x:hidden'>
+<body style='overflow:scroll;overflow-x:hidden'>
+	<div class="container bs-docs-container" style="width:100%;">
+		<div class="row">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+				<button type="button" class="btn btn-primary" id="formSubmit" onclick="preSubmit()"><span class="fa fa-save"></span> 保存</button>
+				<button type="button" class="btn btn-default" id="formReturn" data-dismiss="modal" onclick="doUrl('$!{basePath}/jeecg/lhQuestion.do?list')"><span class="fa fa-arrow-circle-left"></span> 返回</button>
+				</div>
+				<div class="panel-body">
+					<form class="form-horizontal" role="form" id="dailogForm" action="$!{basePath}/jeecg/lhQuestion.do?doEdit" method="POST">
+						<input type="hidden" id="btn_sub" class="btn_sub" />
+						<input type="hidden" name="chooseAnswer" id="chooseAnswer" />
+						<input type="hidden" value="$!{lhQuestion.id}" name="id" id="id" />
+								<div class="form-group mno">
+									<label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">考题类型</label>
+									<div class="col-sm-8">
+									<!--	<input type="text" value="$!{lhQuestion.type}" name="type" id="type" class="form-control" />	-->
+										<select id="type" name="type"  class="form-control" datatype="*" >
+										 <option value="normal" #if($!{lhQuestion.type} == "normal")selected#end>普通</option>
+										 <option value="formula" #if($!{lhQuestion.type} == "formula")selected#end>公式</option>
+										</select>
+									</div>
+								</div>
+								<div class="form-group mno">
+								    <label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">题目简介</label>
+								    <div class="col-sm-8">
+								    	<input type="text" value="$!{lhQuestion.summary}" name="summary" id="summary" class="form-control"  datatype="*"/>
+								    </div>
+								</div>
+								<div class="form-group mno">
+								    <label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">题目内容</label>
+								    <div class="col-sm-8">
+								<!--    	<input type="text" value="$!{lhQuestion.subject}" name="subject" id="subject" class="form-control" datatype="*"/>	-->
+								<textarea name="subject" id="subject" style="width: 880px;height:300px">$!{lhQuestion.subject}</textarea>
+							    <script type="text/javascript">
+							   //     var editor = UE.getEditor('subject');
+                                    var editor = UE.getEditor('subject', {
+                                        toolbars: [[
+                                            'fullscreen', 'source', '|',
+                                            'bold', 'italic', 'underline', '|', 'fontsize', '|', 'kityformula', 'preview'
+                                        ]]
+                                    });		
+							    </script>
+								    </div>
+								</div>	
+								#if($!{questionList.size()} > 1)
+									<div id="answers">
+    									#foreach($!{question} in $!{questionList})
+    									<div class="form-group mno">
+    										<label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">
+												#if($!{velocityCount}==1)
+													A.
+												#elseif($!{velocityCount}==2)
+													B.
+												#elseif($!{velocityCount}==3)
+													C.
+												#elseif($!{velocityCount}==4)
+													D.
+												#end
+											</label>
+    										<div class="col-sm-8">
+    											<input type="text" value="$!{question}" name="chooseAnswer$!{velocityCount}" id="chooseAnswer$!{velocityCount}" class="form-control" />
+    										</div>
+    									</div>
+										#end
+									</div>
+								#else
+									<div id="answers">
+    									#foreach($choose in ["A","B","C","D"])
+    									<div class="form-group mno">
+    										<label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">$choose</label>
+    										<div class="col-sm-8">
+    											<input type="text" value="$!{lhQuestion.chooseAnswer}" name="chooseAnswer$!{velocityCount}" id="chooseAnswer$!{velocityCount}" class="form-control"/>
+    										</div>
+    									</div>
+										#end
+									</div>
+								#end
+								<div class="form-group mno">
+								    <label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">正确答案</label>
+								    <div class="col-sm-8">
+								   <!-- 	<input type="text" value="$!{lhQuestion.rightAnswer}" name="rightAnswer" id="rightAnswer" class="form-control" datatype="*" />	-->
+											<select id="rightAnswer" name="rightAnswer"  class="form-control">
+											 #foreach($choose in ["A","B","C","D"])
+												<option value="$!{velocityCount}" #if($!{lhQuestion.rightAnswer} == $!{velocityCount})selected#end>--$choose</option>
+											 #end
+											</select>
+								    </div>
+								</div>
+						<!--		<div class="form-group mno">
+								    <label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">选择个数</label>
+								    <div class="col-sm-8">
+								    	<input type="text" value="$!{lhQuestion.chooseNumber}" name="chooseNumber" id="chooseNumber" class="form-control" />
+								    </div>
+								</div>	-->
+								<!--
+								<div class="form-group mno">
+								    <label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">题目类型</label>
+								    <div class="col-sm-8">
+								    	<input type="text" value="$!{lhQuestion.type}" name="type" id="type" class="form-control" />
+								    </div>
+								</div>	-->
+								<div class="form-group mno">
+								    <label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">题目分类</label>
+								    <div class="col-sm-8">
+								<!--    	<input type="text" value="$!{lhQuestion.type}" name="type" id="type" class="form-control" />	-->
+										<select name="columnId" id="columnId" class="form-control">
+										 <option value="" >题目类型</option>
+										 #foreach($column in $columnList)
+											<option value="${column.id}" #if($!{lhQuestion.columnId} == ${column.id})selected#end>--$!{column.columnName}</option>
+										 #end
+										</select>
+								    </div>
+								</div>
+						<!--
+								<div class="form-group mno">
+								    <label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">出题次数</label>
+								    <div class="col-sm-8">
+								    	<input type="text" value="$!{lhQuestion.number}" name="number" id="number" class="form-control" />
+								    </div>
+								</div>
+								<div class="form-group mno">
+								    <label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">创建人id</label>
+								    <div class="col-sm-8">
+								    	<input type="text" value="$!{lhQuestion.createBy}" name="createBy" id="createBy" class="form-control" />
+								    </div>
+								</div>
+								<div class="form-group mno">
+								    <label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">创建日期</label>
+								    <div class="col-sm-8">
+								    	<input type="text" value="$!dateTool.format("yyyy-MM-dd",$!{lhQuestion.createDate})" name="createDate" id="createDate" class="form-control" onFocus="WdatePicker({dateFmt:'yyyy-MM-dd'})"   style="background: url('$!{basePath}/plug-in-ui/images/datetime.png') no-repeat scroll right center transparent;"  />
+								    </div>
+								</div>	-->
+								<div class="form-group mno">
+								    <label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">备注</label>
+								    <div class="col-sm-8">
+								    	<input type="text" value="$!{lhQuestion.remark}" name="remark" id="remark" class="form-control" />
+								    </div>
+								</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
+<script>
+$(function(){
+	var type="$!{lhQuestion.type}";
+	if(type=="normal"){
+	    $("#answers").show();
+	}
+	if(type=="formula"){
+	    $("#answers").hide();
+	}
+	$("#type").change(function(){
+		var isFormula = $(this).val();
+    	if(isFormula == "normal") {
+    		$("#answers").show();
+    	 } 
+		if(isFormula == "formula") {
+    		$("#answers").hide();
+    	}
+    });
+});
+
+function preSubmit() {
+    if($("#type").val()=="normal"){
+    	var tmp="";
+    	for(i=1;i<5;i++){
+    		var ca=$("#chooseAnswer"+i).val();
+    		tmp+=ca+"$$";
+    	}
+    	tmp=tmp.substring(0, tmp.length-2);
+    	$("#chooseAnswer").val(tmp);
+	}
+//	$("#formSubmit").submit();
+}
+
+</script>
+<script type="text/javascript" src="$!{basePath}/plug-in-ui/js/Validform_v5.3.2.js"></script> 
+<script type="text/javascript" src="$!{basePath}/plug-in-ui/js/forminit.p3.js"></script>  
