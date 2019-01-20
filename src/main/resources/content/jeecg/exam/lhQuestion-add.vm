@@ -46,7 +46,7 @@
                                                 var editor = UE.getEditor('subject', {
                                                     toolbars: [[
                                                         'fullscreen', 'source', '|',
-                                                        'bold', 'italic', 'underline', '|', 'fontsize', '|', 'kityformula', 'preview'
+                                                        'bold', 'italic', 'underline', '|', 'fontsize', '|', 'simpleupload', 'insertimage', 'emotion','|', 'scrawl', 'insertvideo', 'music', 'attachment','kityformula', 'preview'
                                                     ]]
                                                 });		
             								</script>

@@ -60,7 +60,7 @@ public interface LhQuestionDao{
 	@Sql("DELETE from lh_question WHERE ID = :id")
 	public void deleteById(@Param("id") String id);
 	
-	@Sql("SELECT lq.id,lq.subject,lq.type,lq.choose_answer FROM lh_exam_question leq left join lh_question lq on leq.question_id = lq.id WHERE leq.exam_id = :examId")
+	@Sql("SELECT lq.id,lq.subject,lq.type,lq.choose_answer,lq.right_answer FROM lh_exam_question leq left join lh_question lq on leq.question_id = lq.id WHERE leq.exam_id = :examId")
 	List<LhQuestionEntity> questionByExamId(@Param("examId") String examId);
 	
 }
