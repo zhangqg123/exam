@@ -116,7 +116,12 @@ public class LhQuestionController extends BaseController{
 	 */
 	@RequestMapping(params = "toAdd",method ={RequestMethod.GET, RequestMethod.POST})
 	public void toAddDialog(HttpServletRequest request,HttpServletResponse response)throws Exception{
-		MiniDaoPage<LhQuestionColumnEntity> list =  lhQuestionColumnService.getAll(new LhQuestionColumnEntity(),1,199);
+		String columnId = request.getParameter("columId");
+		LhQuestionColumnEntity lhQuetionColumn = new LhQuestionColumnEntity();
+		if(columnId!=null){
+			lhQuetionColumn.setId(columnId);
+		}
+		MiniDaoPage<LhQuestionColumnEntity> list =  lhQuestionColumnService.getAll(lhQuetionColumn,1,199);
 		List<LhQuestionColumnEntity> columnList = list.getResults();
 		VelocityContext velocityContext = new VelocityContext();
 		velocityContext.put("columnList",columnList);
