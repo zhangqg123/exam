@@ -1,0 +1,19 @@
+INSERT  INTO
+	signin_date
+      ( 
+      ID                            
+      ,OPENID                         
+      ,YEAR                           
+      ,MONTH                          
+      ,DAY                            
+      ,TIME                           
+      ) 
+values
+      (
+      :signinDate.id                            
+      ,:signinDate.openid                        
+      ,:signinDate.year                          
+      ,:signinDate.month                         
+      ,:signinDate.day                           
+      ,:signinDate.time                          
+      )
