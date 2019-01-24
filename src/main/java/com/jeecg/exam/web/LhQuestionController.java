@@ -57,6 +57,11 @@ public class LhQuestionController extends BaseController{
 			@RequestParam(required = false, value = "pageSize", defaultValue = "10") int pageSize) throws Exception{
 			try {
 			 	LOG.info(request, " back list");
+				String rolecodes=(String) request.getSession().getAttribute("rolecodes");
+				String userName=(String) request.getSession().getAttribute("loginUserName");
+				if(rolecodes.contains("exam")){
+					query.setCreateBy(userName);
+				}
 			 	//分页数据
 				MiniDaoPage<LhQuestionEntity> list =  lhQuestionService.getAll(query,pageNo,pageSize);
 				VelocityContext velocityContext = new VelocityContext();
@@ -82,6 +87,11 @@ public class LhQuestionController extends BaseController{
 				 	LhExamEntity exam = lhExamService.get(examId);
 				 	query.setColumnId(exam.getQuestionColumn());
 			 	}
+				String rolecodes=(String) request.getSession().getAttribute("rolecodes");
+				String userName=(String) request.getSession().getAttribute("loginUserName");
+				if(rolecodes.contains("exam")){
+					query.setCreateBy(userName);
+				}
 			 	//分页数据
 				MiniDaoPage<LhQuestionEntity> list =  lhQuestionService.getAll(query,pageNo,pageSize);
 				VelocityContext velocityContext = new VelocityContext();

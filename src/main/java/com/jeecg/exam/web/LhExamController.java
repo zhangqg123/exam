@@ -54,6 +54,11 @@ public class LhExamController extends BaseController{
 			try {
 			 	LOG.info(request, " back list");
 			 	//分页数据
+				String rolecodes=(String) request.getSession().getAttribute("rolecodes");
+				String userName=(String) request.getSession().getAttribute("loginUserName");
+				if(rolecodes.contains("exam")){
+					query.setCreateBy(userName);
+				}
 				MiniDaoPage<LhExamEntity> list =  lhExamService.getAll(query,pageNo,pageSize);
 				MiniDaoPage<LhQuestionColumnEntity> qclist =  lhQuestionColumnService.getAll(new LhQuestionColumnEntity(),1,199);
 				List<LhQuestionColumnEntity> columnList = qclist.getResults();
