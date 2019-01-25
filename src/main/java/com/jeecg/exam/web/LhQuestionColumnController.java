@@ -43,6 +43,11 @@ public class LhQuestionColumnController extends BaseController{
 			try {
 			 	LOG.info(request, " back list");
 			 	//分页数据
+				String rolecodes=(String) request.getSession().getAttribute("rolecodes");
+				String userName=(String) request.getSession().getAttribute("loginUserName");
+				if(rolecodes.contains("exam")){
+					query.setOwner(userName);
+				}
 				MiniDaoPage<LhQuestionColumnEntity> list =  lhQuestionColumnService.getAll(query,pageNo,pageSize);
 				VelocityContext velocityContext = new VelocityContext();
 				velocityContext.put("lhQuestionColumn",query);
@@ -86,9 +91,11 @@ public class LhQuestionColumnController extends BaseController{
 	 */
 	@RequestMapping(params = "doAdd",method ={RequestMethod.GET, RequestMethod.POST})
 	@ResponseBody
-	public AjaxJson doAdd(@ModelAttribute LhQuestionColumnEntity lhQuestionColumn){
+	public AjaxJson doAdd(HttpServletRequest request,@ModelAttribute LhQuestionColumnEntity lhQuestionColumn){
 		AjaxJson j = new AjaxJson();
+		String userName=(String) request.getSession().getAttribute("loginUserName");
 		try {
+			lhQuestionColumn.setOwner(userName);
 			lhQuestionColumnService.insert(lhQuestionColumn);
 			j.setMsg("保存成功");
 		} catch (Exception e) {
@@ -120,9 +127,13 @@ public class LhQuestionColumnController extends BaseController{
 	 */
 	@RequestMapping(params = "doEdit",method ={RequestMethod.GET, RequestMethod.POST})
 	@ResponseBody
-	public AjaxJson doEdit(@ModelAttribute LhQuestionColumnEntity lhQuestionColumn){
+	public AjaxJson doEdit(HttpServletRequest request ,@ModelAttribute LhQuestionColumnEntity lhQuestionColumn){
 		AjaxJson j = new AjaxJson();
 		try {
+			if(lhQuestionColumn.getOwner()==null||lhQuestionColumn.getOwner()==""){
+				String userName=(String) request.getSession().getAttribute("loginUserName");
+				lhQuestionColumn.setOwner(userName);
+			}
 			lhQuestionColumnService.update(lhQuestionColumn);
 			j.setMsg("编辑成功");
 		} catch (Exception e) {

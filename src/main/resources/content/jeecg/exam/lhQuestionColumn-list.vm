@@ -74,7 +74,7 @@
 											<th>类型</th>
 											<th>父节点</th>
 											<th>地址</th>
-											<th>owner</th>
+											<th>所属用户</th>
 									<th>操作</th>
 								</thead>
 								<tbody>

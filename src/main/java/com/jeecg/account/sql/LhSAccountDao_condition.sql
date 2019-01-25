@@ -18,3 +18,11 @@
 		    /* 关联用户 */
 			and lsa.USER_ID = :lhSAccount.userId
 		</#if>
+		<#if ( lhSAccount.lat )?? && lhSAccount.lat ?length gt 0>
+		    /* 关联用户 */
+			and lsa.lat = :lhSAccount.lat
+		</#if>
+		<#if ( lhSAccount.lng )?? && lhSAccount.lng ?length gt 0>
+		    /* 关联用户 */
+			and lsa.lng = :lhSAccount.lng
+		</#if>

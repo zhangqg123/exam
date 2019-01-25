@@ -5,7 +5,9 @@ INSERT  INTO
       ,ACCOUNT_NAME                   
       ,APP_ID                         
       ,APP_SECRET                     
-      ,USER_ID                        
+      ,USER_ID      
+      ,lat
+      ,lng
       ) 
 values
       (
@@ -14,4 +16,6 @@ values
       ,:lhSAccount.appId                         
       ,:lhSAccount.appSecret                     
       ,:lhSAccount.userId                        
+      ,:lhSAccount.lat                        
+      ,:lhSAccount.lng                        
       )

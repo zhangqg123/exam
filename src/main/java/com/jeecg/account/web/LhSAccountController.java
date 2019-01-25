@@ -1,7 +1,10 @@
 package com.jeecg.account.web;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import org.apache.velocity.VelocityContext;
 import org.jeecgframework.minidao.pojo.MiniDaoPage;
 import org.jeecgframework.p3.core.common.utils.AjaxJson;
@@ -15,7 +18,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
 import com.jeecg.account.entity.LhSAccountEntity;
+import com.jeecg.account.entity.User;
 import com.jeecg.account.service.LhSAccountService;
 
  /**
@@ -42,9 +47,11 @@ public class LhSAccountController extends BaseController{
 			 	LOG.info(request, " back list");
 			 	//分页数据
 				MiniDaoPage<LhSAccountEntity> list =  lhSAccountService.getAll(query,pageNo,pageSize);
+				List<User> userList=lhSAccountService.getUserList();
 				VelocityContext velocityContext = new VelocityContext();
 				velocityContext.put("lhSAccount",query);
 				velocityContext.put("pageInfos",SystemTools.convertPaginatedList(list));
+				velocityContext.put("userList",userList);
 				String viewName = "jeecg/account/lhSAccount-list.vm";
 				ViewVelocity.view(request,response,viewName,velocityContext);
 			} catch (Exception e) {
@@ -71,9 +78,11 @@ public class LhSAccountController extends BaseController{
 	 */
 	@RequestMapping(params = "toAdd",method ={RequestMethod.GET, RequestMethod.POST})
 	public void toAddDialog(HttpServletRequest request,HttpServletResponse response)throws Exception{
-		 VelocityContext velocityContext = new VelocityContext();
-		 String viewName = "jeecg/account/lhSAccount-add.vm";
-		 ViewVelocity.view(request,response,viewName,velocityContext);
+		List<User> userList=lhSAccountService.getUserList();
+		VelocityContext velocityContext = new VelocityContext();
+		velocityContext.put("userList",userList);
+		String viewName = "jeecg/account/lhSAccount-add.vm";
+		ViewVelocity.view(request,response,viewName,velocityContext);
 	}
 
 	/**
@@ -101,11 +110,13 @@ public class LhSAccountController extends BaseController{
 	 */
 	@RequestMapping(params="toEdit",method = RequestMethod.GET)
 	public void toEdit(@RequestParam(required = true, value = "id" ) String id,HttpServletResponse response,HttpServletRequest request) throws Exception{
-			 VelocityContext velocityContext = new VelocityContext();
-			 LhSAccountEntity lhSAccount = lhSAccountService.get(id);
-			 velocityContext.put("lhSAccount",lhSAccount);
-			 String viewName = "jeecg/account/lhSAccount-edit.vm";
-			 ViewVelocity.view(request,response,viewName,velocityContext);
+		List<User> userList=lhSAccountService.getUserList();
+		VelocityContext velocityContext = new VelocityContext();
+		LhSAccountEntity lhSAccount = lhSAccountService.get(id);
+		velocityContext.put("lhSAccount",lhSAccount);
+		velocityContext.put("userList",userList);
+		String viewName = "jeecg/account/lhSAccount-edit.vm";
+		ViewVelocity.view(request,response,viewName,velocityContext);
 	}
 
 	/**

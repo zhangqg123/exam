@@ -1,5 +1,7 @@
 package com.jeecg.account.dao;
 
+import java.util.List;
+
 import org.jeecgframework.minidao.annotation.Param;
 import org.jeecgframework.minidao.annotation.ResultType;
 import org.jeecgframework.minidao.annotation.Sql;
@@ -7,6 +9,7 @@ import org.jeecgframework.minidao.pojo.MiniDaoPage;
 import org.springframework.stereotype.Repository;
 
 import com.jeecg.account.entity.LhSAccountEntity;
+import com.jeecg.account.entity.User;
 
 /**
  * 描述：账号表
@@ -60,6 +63,9 @@ public interface LhSAccountDao{
 	 
 	@Sql("SELECT * FROM lh_s_account WHERE app_id = :appId")
 	LhSAccountEntity getByAppId(@Param("appId") String appId);
+	
+	@Sql("SELECT id,userName,realName FROM t_s_base_user where id in (select tsru.userid from t_s_role_user tsru left join t_s_role tsr on tsr.id=tsru.roleid where tsr.rolecode ='exam' or tsr.rolecode='admin') ")
+	List<User> getUserList();
 	
 }
 

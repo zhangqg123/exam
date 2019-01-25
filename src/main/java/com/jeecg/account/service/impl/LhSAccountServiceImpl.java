@@ -2,6 +2,7 @@ package com.jeecg.account.service.impl;
 
 import javax.annotation.Resource;
 
+import java.util.List;
 import java.util.UUID;
 
 import org.jeecgframework.minidao.pojo.MiniDaoPage;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.jeecg.account.dao.LhSAccountDao;
 import com.jeecg.account.entity.LhSAccountEntity;
+import com.jeecg.account.entity.User;
 import com.jeecg.account.service.LhSAccountService;
 
 /**
@@ -64,5 +66,11 @@ public class LhSAccountServiceImpl implements LhSAccountService {
 	public LhSAccountEntity getByAppId(String appId) {
 		// TODO Auto-generated method stub
 		return lhSAccountDao.getByAppId(appId);
+	}
+
+	@Override
+	public List<User> getUserList() {
+		// TODO Auto-generated method stub
+		return lhSAccountDao.getUserList();
 	}
 }

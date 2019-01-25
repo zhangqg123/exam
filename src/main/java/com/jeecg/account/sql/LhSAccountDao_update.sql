@@ -15,4 +15,10 @@ SET
 	   <#if lhSAccount.userId ?exists>
 		   USER_ID = :lhSAccount.userId,
 		</#if>
+	   <#if lhSAccount.lat ?exists>
+		   lat = :lhSAccount.lat,
+		</#if>
+	   <#if lhSAccount.lng ?exists>
+		   lng = :lhSAccount.lng,
+		</#if>
 WHERE id = :lhSAccount.id

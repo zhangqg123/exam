@@ -92,7 +92,13 @@ public class LhExamController extends BaseController{
 	 */
 	@RequestMapping(params = "toAdd",method ={RequestMethod.GET, RequestMethod.POST})
 	public void toAddDialog(HttpServletRequest request,HttpServletResponse response)throws Exception{
-		MiniDaoPage<LhQuestionColumnEntity> list =  lhQuestionColumnService.getAll(new LhQuestionColumnEntity(),1,199);
+		String rolecodes=(String) request.getSession().getAttribute("rolecodes");
+		String userName=(String) request.getSession().getAttribute("loginUserName");
+		LhQuestionColumnEntity lhQuestionColumn=new LhQuestionColumnEntity();
+		if(rolecodes.contains("exam")){
+			lhQuestionColumn.setOwner(userName);
+		}
+		MiniDaoPage<LhQuestionColumnEntity> list =  lhQuestionColumnService.getAll(lhQuestionColumn,1,199);
 		List<LhQuestionColumnEntity> columnList = list.getResults();
 		VelocityContext velocityContext = new VelocityContext();
 		velocityContext.put("columnList",columnList);
@@ -128,7 +134,13 @@ public class LhExamController extends BaseController{
 	 */
 	@RequestMapping(params="toEdit",method = RequestMethod.GET)
 	public void toEdit(@RequestParam(required = true, value = "id" ) String id,HttpServletResponse response,HttpServletRequest request) throws Exception{
-		MiniDaoPage<LhQuestionColumnEntity> list =  lhQuestionColumnService.getAll(new LhQuestionColumnEntity(),1,199);
+		String rolecodes=(String) request.getSession().getAttribute("rolecodes");
+		String userName=(String) request.getSession().getAttribute("loginUserName");
+		LhQuestionColumnEntity lhQuestionColumn=new LhQuestionColumnEntity();
+		if(rolecodes.contains("exam")){
+			lhQuestionColumn.setOwner(userName);
+		}
+		MiniDaoPage<LhQuestionColumnEntity> list =  lhQuestionColumnService.getAll(lhQuestionColumn,1,199);
 		List<LhQuestionColumnEntity> columnList = list.getResults();
 		VelocityContext velocityContext = new VelocityContext();
 		LhExamEntity lhExam = lhExamService.get(id);

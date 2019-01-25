@@ -1,9 +1,12 @@
 package com.jeecg.account.service;
 
+import java.util.List;
+
 import org.jeecgframework.minidao.annotation.Param;
 import org.jeecgframework.minidao.pojo.MiniDaoPage;
 
 import com.jeecg.account.entity.LhSAccountEntity;
+import com.jeecg.account.entity.User;
 
 /**
  * 描述：账号表
@@ -25,5 +28,7 @@ public interface LhSAccountService {
 	public void batchDelete(String[] ids);
 
 	public LhSAccountEntity getByAppId(String appId);
+
+	public List<User> getUserList();
 	
 }
