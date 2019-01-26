@@ -50,6 +50,10 @@ public class LhApiExamController extends BaseController{
   
 	@RequestMapping(value="/columnList")
 	public @ResponseBody String columnList(@ModelAttribute LhQuestionColumnEntity query, HttpServletRequest request, HttpServletResponse response) throws Exception {
+		String createBy=request.getParameter("createBy");
+		if(createBy!=null&&createBy!=""){
+			query.setOwner(createBy);
+		}
 		MiniDaoPage<LhQuestionColumnEntity> list = lhQuestionColumnService.getAll(query, 1, 199);
 		// 分页数据
 		List<?> resut = list.getResults();

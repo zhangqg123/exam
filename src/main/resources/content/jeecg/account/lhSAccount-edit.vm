@@ -37,7 +37,7 @@
 										<select name="userId" id="userId" class="form-control">
 										 <option value="" >选择</option>
 										 #foreach($user in $userList)
-											<option value="${user.id}" #if($!{lhSAccount.userId} == ${user.id})selected#end>--$!{user.userName}</option>
+											<option value="${user.userName}" #if($!{lhSAccount.userId} == ${user.userName})selected#end>--$!{user.userName}</option>
 										 #end
 										</select>
 								    </div>
