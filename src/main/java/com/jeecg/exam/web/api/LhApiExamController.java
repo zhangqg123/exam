@@ -26,9 +26,11 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.jeecg.exam.entity.LhExamEntity;
 import com.jeecg.exam.entity.LhExamScoreEntity;
+import com.jeecg.exam.entity.LhExamStudentEntity;
 import com.jeecg.exam.entity.LhQuestionColumnEntity;
 import com.jeecg.exam.entity.LhQuestionEntity;
 import com.jeecg.exam.service.LhExamService;
+import com.jeecg.exam.service.LhExamStudentService;
 import com.jeecg.exam.service.LhQuestionColumnService;
 import com.jeecg.exam.service.LhQuestionService;
 
@@ -43,6 +45,8 @@ import com.jeecg.exam.service.LhQuestionService;
 public class LhApiExamController extends BaseController{
   @Autowired
   private LhExamService lhExamService;
+  @Autowired
+  private LhExamStudentService lhExamStudentService;
   @Autowired
   private LhQuestionService lhQuestionService;
   @Autowired
@@ -89,6 +93,25 @@ public class LhApiExamController extends BaseController{
 		return JSONArray.toJSONString(jsonArray);
 	}
 	
+	@RequestMapping("/userInfo")
+	public @ResponseBody AjaxJson userInfo(HttpServletRequest request, HttpServletResponse response) {
+		AjaxJson j = new AjaxJson();
+		String id = request.getHeader("login-code");
+		if(id!=null&&id!=""){
+			try {
+	    		System.out.println("id:"+id);
+				LhExamStudentEntity examStudent = lhExamStudentService.get(id);
+				j.setObj(examStudent);
+				j.setSuccess(true);
+			} catch (Exception e) {
+				e.printStackTrace();
+				j.setSuccess(false);
+			}
+		}else{
+			j.setSuccess(false);
+		}
+		return j;
+	}
 
 }
 
