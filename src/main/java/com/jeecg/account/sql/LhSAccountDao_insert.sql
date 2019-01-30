@@ -8,6 +8,11 @@ INSERT  INTO
       ,USER_ID      
       ,lat
       ,lng
+      ,aes_key
+      ,iv_key
+      ,sms_appid
+      ,sms_appkey
+      ,sms_templateid
       ) 
 values
       (
@@ -18,4 +23,9 @@ values
       ,:lhSAccount.userId                        
       ,:lhSAccount.lat                        
       ,:lhSAccount.lng                        
+      ,:lhSAccount.aesKey                        
+      ,:lhSAccount.ivKey                     
+      ,:lhSAccount.smsAppid                        
+      ,:lhSAccount.smsAppkey                        
+      ,:lhSAccount.smsTemplateid                        
       )

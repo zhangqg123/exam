@@ -17,6 +17,11 @@ public class LhSAccountEntity implements Serializable{
 	
 	private String lat;
 	private String lng;
+	private String aesKey;
+	private String ivKey;
+	private String smsAppid;
+	private String smsAppkey;
+	private String smsTemplateid;
 		public String getId() {	    return this.id;	}	public void setId(String id) {	    this.id=id;	}	public String getAccountName() {	    return this.accountName;	}	public void setAccountName(String accountName) {	    this.accountName=accountName;	}	public String getAppId() {	    return this.appId;	}	public void setAppId(String appId) {	    this.appId=appId;	}	public String getAppSecret() {	    return this.appSecret;	}	public void setAppSecret(String appSecret) {	    this.appSecret=appSecret;	}	public String getUserId() {	    return this.userId;	}	public void setUserId(String userId) {	    this.userId=userId;	}
 	public String getLat() {
 		return lat;
@@ -35,6 +40,36 @@ public class LhSAccountEntity implements Serializable{
 	}
 	public void setRoleCode(String roleCode) {
 		this.roleCode = roleCode;
+	}
+	public String getAesKey() {
+		return aesKey;
+	}
+	public void setAesKey(String aesKey) {
+		this.aesKey = aesKey;
+	}
+	public String getIvKey() {
+		return ivKey;
+	}
+	public void setIvKey(String ivKey) {
+		this.ivKey = ivKey;
+	}
+	public String getSmsAppid() {
+		return smsAppid;
+	}
+	public void setSmsAppid(String smsAppid) {
+		this.smsAppid = smsAppid;
+	}
+	public String getSmsAppkey() {
+		return smsAppkey;
+	}
+	public void setSmsAppkey(String smsAppkey) {
+		this.smsAppkey = smsAppkey;
+	}
+	public String getSmsTemplateid() {
+		return smsTemplateid;
+	}
+	public void setSmsTemplateid(String smsTemplateid) {
+		this.smsTemplateid = smsTemplateid;
 	}
 }
 

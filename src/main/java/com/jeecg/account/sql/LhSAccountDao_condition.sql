@@ -26,3 +26,23 @@
 		    /* 关联用户 */
 			and lsa.lng = :lhSAccount.lng
 		</#if>
+		<#if ( lhSAccount.aesKey )?? && lhSAccount.aeskey ?length gt 0>
+		    /* 关联用户 */
+			and lsa.aes_key = :lhSAccount.aesKey
+		</#if>
+		<#if ( lhSAccount.ivKey )?? && lhSAccount.ivkey ?length gt 0>
+		    /* 关联用户 */
+			and lsa.iv_key = :lhSAccount.ivKey
+		</#if>
+		<#if ( lhSAccount.smsAppid )?? && lhSAccount.smsAppid ?length gt 0>
+		    /* 关联用户 */
+			and lsa.sms_appid = :lhSAccount.smsAppid
+		</#if>
+		<#if ( lhSAccount.smsAppkey )?? && lhSAccount.smsAppkey ?length gt 0>
+		    /* 关联用户 */
+			and lsa.sms_appkey = :lhSAccount.smsAppkey
+		</#if>
+		<#if ( lhSAccount.smsTemplateid )?? && lhSAccount.smsTemplateid ?length gt 0>
+		    /* 关联用户 */
+			and lsa.sms_templateid = :lhSAccount.smsTemplateid
+		</#if>

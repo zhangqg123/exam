@@ -21,4 +21,19 @@ SET
 	   <#if lhSAccount.lng ?exists>
 		   lng = :lhSAccount.lng,
 		</#if>
+	   <#if lhSAccount.aesKey ?exists>
+		   aes_key = :lhSAccount.aesKey,
+		</#if>
+	   <#if lhSAccount.ivKey ?exists>
+		   iv_key = :lhSAccount.ivKey,
+		</#if>
+	   <#if lhSAccount.smsAppid ?exists>
+		   sms_appid = :lhSAccount.smsAppid,
+		</#if>
+	   <#if lhSAccount.smsAppkey ?exists>
+		   sms_appkey = :lhSAccount.smsAppkey,
+		</#if>
+	   <#if lhSAccount.smsTemplateid ?exists>
+		   sms_templateid = :lhSAccount.smsTemplateid,
+		</#if>
 WHERE id = :lhSAccount.id
