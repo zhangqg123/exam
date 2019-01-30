@@ -22,6 +22,7 @@ import com.jeecg.signin.dao.SigninDateDao;
 import com.jeecg.signin.entity.SigninDateEntity;
 import com.jeecg.signin.service.SigninDateService;
 import com.jeecg.signin.util.CalendarUtil;
+import com.jeecg.signin.util.LocationUtils;
 import com.jeecg.signin.util.WxApi;
 
 
@@ -89,8 +90,8 @@ public class RestController {
 	@RequestMapping("/doSign")
 //	@RequestMapping(params = "doSign",method ={RequestMethod.GET, RequestMethod.POST})
 	@ResponseBody
-	public String doSign(String openid){
-		String message=null;
+	public String doSign(String openid,String lat,String lng,String appId){
+		String message="0";
 		SigninDateEntity entity = new SigninDateEntity();
 		entity.setOpenid(openid);
 		entity.setYear(CalendarUtil.getYear());
@@ -102,11 +103,17 @@ public class RestController {
 		List<SigninDateEntity> list = signinlist.getResults();
 		if(CollectionUtils.isNotEmpty(list)){
 			//已经签过到，不做任何处理
-			message="already";
+			message="2";
 		}else{
-			entity.setTime(new Date());
-			signinDateService.insert(entity);//加入今日签到数据
-			message="success";
+			LhSAccountEntity lhSAccount=lhSAccountService.getByAppId(appId);
+			double distance = LocationUtils.getDistance(Double.valueOf(lat),Double.valueOf(lng), Double.valueOf(lhSAccount.getLat()), Double.valueOf(lhSAccount.getLng()));
+			if(distance>100){
+				message="3";
+			}else{
+				entity.setTime(new Date());
+				signinDateService.insert(entity);//加入今日签到数据
+				message="1";
+			}
 		}
 		
 		return message;
