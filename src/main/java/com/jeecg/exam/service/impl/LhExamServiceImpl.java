@@ -2,6 +2,11 @@ package com.jeecg.exam.service.impl;
 
 import javax.annotation.Resource;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import org.jeecgframework.minidao.pojo.MiniDaoPage;
@@ -120,4 +125,7 @@ public class LhExamServiceImpl implements LhExamService {
 	public LhExamScoreEntity queryScore(String openId, String examId) {
 		return lhExamScoreService.getByOpenIdExamId(openId, examId);
 	}
+
+	
+
 }

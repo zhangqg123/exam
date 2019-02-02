@@ -1,5 +1,7 @@
 package com.jeecg.exam.service;
 
+import java.util.List;
+
 import org.jeecgframework.minidao.annotation.Param;
 import org.jeecgframework.minidao.pojo.MiniDaoPage;
 
@@ -29,5 +31,5 @@ public interface LhExamService {
 	public JSONArray countScore(String param, String openId, String examId);
 
 	public LhExamScoreEntity queryScore(String openId, String examId);
-	
+
 }
