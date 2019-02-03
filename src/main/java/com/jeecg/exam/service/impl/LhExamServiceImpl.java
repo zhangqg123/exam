@@ -79,7 +79,7 @@ public class LhExamServiceImpl implements LhExamService {
 
 	@Override
 	@Transactional
-	public JSONArray countScore(String param,String openId,String examId) {
+	public Map<String, Object> countScore(String param,String openId,String examId) {
 		JSONArray data = JSONArray.parseArray(param);
 	    JSONObject rowData = new JSONObject();
 	    int totalScore=0;
@@ -103,9 +103,9 @@ public class LhExamServiceImpl implements LhExamService {
 	    }		
 	    LhExamScoreEntity lhExamScore=lhExamScoreService.getByOpenIdExamId(openId,examId);
 	    if(lhExamScore!=null){
-	    	if(totalScore>lhExamScore.getScore()){
+//	    	if(totalScore>lhExamScore.getScore()){
 	    		lhExamScore.setScore(totalScore);
-	    	}
+//	    	}
 	    	lhExamScore.setNumber(lhExamScore.getNumber()+1);
     		lhExamScoreService.update(lhExamScore);
 	    }else{
@@ -116,8 +116,11 @@ public class LhExamServiceImpl implements LhExamService {
 		    lhExamScore.setNumber(1);
 		    lhExamScoreService.insert(lhExamScore);
 	    }
-	    
-		return jsonArray;
+		Map<String,Object> map = new HashMap<String,Object>();
+		map.put("lhExamScore", lhExamScore);
+		map.put("jsonArray", jsonArray);
+
+		return map;
 		
 	}
 

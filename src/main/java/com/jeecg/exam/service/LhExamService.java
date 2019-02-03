@@ -1,6 +1,7 @@
 package com.jeecg.exam.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.jeecgframework.minidao.annotation.Param;
 import org.jeecgframework.minidao.pojo.MiniDaoPage;
@@ -28,7 +29,7 @@ public interface LhExamService {
 	
 	public void batchDelete(String[] ids);
 
-	public JSONArray countScore(String param, String openId, String examId);
+	public Map<String, Object> countScore(String param, String openId, String examId);
 
 	public LhExamScoreEntity queryScore(String openId, String examId);
 

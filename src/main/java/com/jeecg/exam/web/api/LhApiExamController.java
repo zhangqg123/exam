@@ -83,15 +83,15 @@ public class LhApiExamController extends BaseController{
 		return JSONArray.toJSONString(result);
 	}
 	
-	@RequestMapping(value="/subChoose")
-	public @ResponseBody String subChoose(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		String param = request.getParameter("param");
-		String openId = request.getParameter("openId");
-		String examId = request.getParameter("examId");
-		JSONArray jsonArray = lhExamService.countScore(param,openId,examId);
-//		List<LhQuestionEntity> result = lhQuestionService.questionByExamId(examId);
-		return JSONArray.toJSONString(jsonArray);
-	}
+//	@RequestMapping(value="/subChoose")
+//	public @ResponseBody String subChoose(HttpServletRequest request, HttpServletResponse response) throws Exception {
+//		String param = request.getParameter("param");
+//		String openId = request.getParameter("openId");
+//		String examId = request.getParameter("examId");
+//		JSONArray jsonArray = lhExamService.countScore(param,openId,examId);
+////		List<LhQuestionEntity> result = lhQuestionService.questionByExamId(examId);
+//		return JSONArray.toJSONString(jsonArray);
+//	}
 	
 	@RequestMapping("/userInfo")
 	public @ResponseBody AjaxJson userInfo(HttpServletRequest request, HttpServletResponse response) {
