@@ -50,7 +50,7 @@ public class LhExamScoreController extends BaseController{
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-}
+	}
 
 	 /**
 	  * 详情

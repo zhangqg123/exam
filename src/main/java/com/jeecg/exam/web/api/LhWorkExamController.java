@@ -28,6 +28,7 @@ import com.jeecg.exam.entity.LhExamEntity;
 import com.jeecg.exam.entity.LhExamScoreEntity;
 import com.jeecg.exam.entity.LhQuestionColumnEntity;
 import com.jeecg.exam.entity.LhQuestionEntity;
+import com.jeecg.exam.service.LhExamScoreService;
 import com.jeecg.exam.service.LhExamService;
 import com.jeecg.exam.service.LhQuestionColumnService;
 import com.jeecg.exam.service.LhQuestionService;
@@ -47,6 +48,8 @@ public class LhWorkExamController extends BaseController{
   private LhQuestionService lhQuestionService;
   @Autowired
   private LhQuestionColumnService lhQuestionColumnService;
+  @Autowired
+  private LhExamScoreService lhExamScoreService;
 
 	@RequestMapping(value="/columnList")
 	public @ResponseBody String columnList(@ModelAttribute LhQuestionColumnEntity query, HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -81,15 +84,16 @@ public class LhWorkExamController extends BaseController{
 		return JSONArray.toJSONString(result);
 	}
 	
-//	@RequestMapping(value="/subChoose")
-//	public @ResponseBody String subChoose(HttpServletRequest request, HttpServletResponse response) throws Exception {
-//		String param = request.getParameter("param");
-//		String openId = request.getParameter("openId");
-//		String examId = request.getParameter("examId");
-//		int totalScore = lhExamService.countScore(param,openId,examId);
-////		List<LhQuestionEntity> result = lhQuestionService.questionByExamId(examId);
-//		return JSONArray.toJSONString(totalScore);
-//	}
+	
+	@RequestMapping(value="/scoreList")
+	public @ResponseBody String scoreList(@ModelAttribute LhExamScoreEntity query, HttpServletRequest request, HttpServletResponse response,
+			@RequestParam(required = false, value = "pageNumber", defaultValue = "1") int pageNo,
+			@RequestParam(required = false, value = "pageSize", defaultValue = "6") int pageSize) throws Exception {
+			//分页数据
+		MiniDaoPage<LhExamScoreEntity> list =  lhExamScoreService.getAll(query, pageNo, pageSize);
+		return JSONArray.toJSONString(list.getResults()).toString();
+	}
+
 	@RequestMapping(value="/queryScore")
 	public @ResponseBody String queryScore(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String openId = request.getParameter("openId");

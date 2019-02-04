@@ -12,7 +12,8 @@ import java.math.BigDecimal;
  */
 public class LhExamScoreEntity implements Serializable{
 	private static final long serialVersionUID = 1L;
-		/**	 *题目ID	 */	private String id;	/**	 *考试编号	 */	private String examId;	/**	 *openId	 */	private String openId;	/**	 *分数	 */	private Integer score;
+		/**	 *题目ID	 */	private String id;	/**	 *考试编号	 */	private String examId;
+	private String examName;	/**	 *openId	 */	private String openId;	/**	 *分数	 */	private Integer score;
 	
 	private Integer number;
 		public String getId() {	    return this.id;	}	public void setId(String id) {	    this.id=id;	}	public String getExamId() {	    return this.examId;	}	public void setExamId(String examId) {	    this.examId=examId;	}	public String getOpenId() {	    return this.openId;	}	public void setOpenId(String openId) {	    this.openId=openId;	}	public Integer getScore() {	    return this.score;	}	public void setScore(Integer score) {	    this.score=score;	}
@@ -21,6 +22,12 @@ public class LhExamScoreEntity implements Serializable{
 	}
 	public void setNumber(Integer number) {
 		this.number = number;
+	}
+	public String getExamName() {
+		return examName;
+	}
+	public void setExamName(String examName) {
+		this.examName = examName;
 	}
 }
 
