@@ -1,6 +1,9 @@
 package com.jeecg.exam.web.api;
 
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -77,10 +80,15 @@ public class LhApiExamController extends BaseController{
 	}
 	
 	@RequestMapping(value="/questionList")
-	public @ResponseBody String questionList(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public @ResponseBody AjaxJson questionList(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		AjaxJson j = new AjaxJson();
 		String examId = request.getParameter("examId");
 		List<LhQuestionEntity> result = lhQuestionService.questionByExamId(examId);
-		return JSONArray.toJSONString(result);
+		j.setObj(result);
+		Map<String,Object> attributes=new HashMap<String,Object>();
+		attributes.put("startTime", System.currentTimeMillis());
+		j.setAttributes(attributes);
+		return j;
 	}
 	
 //	@RequestMapping(value="/subChoose")

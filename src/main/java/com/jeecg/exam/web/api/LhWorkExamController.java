@@ -63,9 +63,10 @@ public class LhWorkExamController extends BaseController{
 	  * @return
 	  */
 	@RequestMapping(value="/examList")
-	public @ResponseBody String examList(@ModelAttribute LhExamEntity query, HttpServletRequest request, HttpServletResponse response ,
+	public @ResponseBody AjaxJson examList(@ModelAttribute LhExamEntity query, HttpServletRequest request, HttpServletResponse response ,
 			@RequestParam(required = false, value = "pageNumber", defaultValue = "1") int pageNo,
 			@RequestParam(required = false, value = "pageSize", defaultValue = "6") int pageSize) throws Exception {
+		AjaxJson j = new AjaxJson();
 		String guideStatus = request.getParameter("guide_status");
 		String questionColumn = request.getParameter("category_id");
 		if(questionColumn!=null && questionColumn!="" && !questionColumn.equals("all")){
@@ -73,8 +74,9 @@ public class LhWorkExamController extends BaseController{
 		}
 		MiniDaoPage<LhExamEntity> list = lhExamService.getAll(query, pageNo, pageSize);
 		// 分页数据
-		List<?> resut = list.getResults();
-		return JSONArray.toJSONString(resut);
+//		List<?> resut = list.getResults();
+		j.setObj(list.getResults());
+		return j;
 	}
 	
 	@RequestMapping(value="/questionList")
@@ -86,12 +88,14 @@ public class LhWorkExamController extends BaseController{
 	
 	
 	@RequestMapping(value="/scoreList")
-	public @ResponseBody String scoreList(@ModelAttribute LhExamScoreEntity query, HttpServletRequest request, HttpServletResponse response,
+	public @ResponseBody AjaxJson scoreList(@ModelAttribute LhExamScoreEntity query, HttpServletRequest request, HttpServletResponse response,
 			@RequestParam(required = false, value = "pageNumber", defaultValue = "1") int pageNo,
 			@RequestParam(required = false, value = "pageSize", defaultValue = "6") int pageSize) throws Exception {
 			//分页数据
+		AjaxJson j = new AjaxJson();
 		MiniDaoPage<LhExamScoreEntity> list =  lhExamScoreService.getAll(query, pageNo, pageSize);
-		return JSONArray.toJSONString(list.getResults()).toString();
+		j.setObj(list.getResults());
+		return j;
 	}
 
 	@RequestMapping(value="/queryScore")
