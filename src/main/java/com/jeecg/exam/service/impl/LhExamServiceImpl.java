@@ -101,16 +101,19 @@ public class LhExamServiceImpl implements LhExamService {
 	        }
 	        jsonArray.add(i, rowData);
 	    }		
+	    LhExamEntity lhExam = this.get(examId);
 	    LhExamScoreEntity lhExamScore=lhExamScoreService.getByOpenIdExamId(openId,examId);
 	    if(lhExamScore!=null){
 //	    	if(totalScore>lhExamScore.getScore()){
 	    		lhExamScore.setScore(totalScore);
 //	    	}
+	    	lhExamScore.setExamName(lhExam.getExamName());
 	    	lhExamScore.setNumber(lhExamScore.getNumber()+1);
     		lhExamScoreService.update(lhExamScore);
 	    }else{
 		    lhExamScore=new LhExamScoreEntity();
 		    lhExamScore.setExamId(examId);
+	    	lhExamScore.setExamName(lhExam.getExamName());
 		    lhExamScore.setOpenId(openId);
 		    lhExamScore.setScore(totalScore);
 		    lhExamScore.setNumber(1);
