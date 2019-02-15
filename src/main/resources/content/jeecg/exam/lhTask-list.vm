@@ -1,0 +1,205 @@
+#parse("content/base/back/common/macro.vm")
+<!DOCTYPE html>
+<html lang="en">
+#parse("content/base/back/common/head.vm")
+<body style='overflow:scroll;overflow-x:hidden'>
+	<div class="container bs-docs-container" style="width:100%;">
+		<div class="row">
+			<form role="form" class="form-inline" action="$!{basePath}/jeecg/lhTask.do?list" method="post"  id="formSubmit">
+				<div  class="col-md-10" style="width:100%">
+					<div class="panel panel-default">
+						<div class="panel-heading">列表</div>
+						<div class="panel-body">
+							<div class="search">
+						<!--				 <div class="form-group col-sm-3">
+											<label for="taskName" class="control-label col-sm-3 line34">作业名称</label>
+											<div class="col-sm-8">
+												<input type="text" name="taskName" id="taskName" value="$!{lhTask.taskName}" class="form-control">
+											</div>
+										 </div>
+										 <div class="form-group col-sm-3">
+											<label for="summary" class="control-label col-sm-3 line34">简介</label>
+											<div class="col-sm-8">
+												<input type="text" name="summary" id="summary" value="$!{lhTask.summary}" class="form-control">
+											</div>
+										 </div>	-->
+										 <div class="form-group col-sm-3">
+											<label for="examType" class="control-label col-sm-3 line34"> 考试类型</label>
+											<div class="col-sm-8">
+												<input type="text" name="examType" id="examType" value="$!{lhTask.examType}" class="form-control">
+											</div>
+										 </div>
+										 <div class="form-group col-sm-3">
+											<label for="examId" class="control-label col-sm-3 line34">考试</label>
+											<div class="col-sm-8">
+												<input type="text" name="examId" id="examId" value="$!{lhTask.examId}" class="form-control">
+											</div>
+										 </div>
+							<!--			 <div class="form-group col-sm-3">
+											<label for="type" class="control-label col-sm-3 line34">类型</label>
+											<div class="col-sm-8">
+												<input type="text" name="type" id="type" value="$!{lhTask.type}" class="form-control">
+											</div>
+										 </div>
+										 <div class="form-group col-sm-3">
+											<label for="createBy" class="control-label col-sm-3 line34">创建人id</label>
+											<div class="col-sm-8">
+												<input type="text" name="createBy" id="createBy" value="$!{lhTask.createBy}" class="form-control">
+											</div>
+										 </div>
+										<div class="form-group col-sm-3">
+											<label for="createDate" class="control-label col-sm-3 line34">创建日期</label>
+											<div class="col-sm-8">
+												<input type="text" name="createDate" id="createDate" value="$!dateTool.format('yyyy-MM-dd',$!{lhTask.createDate})" class="form-control">
+											</div>
+										 </div>
+										 <div class="form-group col-sm-3">
+											<label for="assign" class="control-label col-sm-3 line34">作业分派</label>
+											<div class="col-sm-8">
+												<input type="text" name="assign" id="assign" value="$!{lhTask.assign}" class="form-control">
+											</div>
+										 </div>
+										<div class="form-group col-sm-3">
+											<label for="assignDate" class="control-label col-sm-3 line34">作业日期</label>
+											<div class="col-sm-8">
+												<input type="text" name="assignDate" id="assignDate" value="$!dateTool.format('yyyy-MM-dd',$!{lhTask.assignDate})" class="form-control">
+											</div>
+										 </div>	-->
+								<button type="submit" class="btn btn-primary"><i class="fa fa-search"></i> 搜  索</button>
+								<button type="button" class="btn btn-primary" onclick="searchReset()"><i class="fa fa-refresh"></i> 重  置</button>
+								<div class="clearfix"></div>
+							</div>
+							<div id="legend">
+								<legend  class="le">
+									<button type="button" class="btn btn-primary" onclick="doUrl('$!{basePath}/jeecg/lhTask.do?toAdd')" ><i class="fa fa-plus"></i> 新增</button> 
+									<button type="button" class="btn btn-primary" onclick="batchDelete()" ><i class="fa fa-trash-o"></i> 批量删除</button>
+								</legend>
+							</div>
+							<table class="table table-striped">
+								<thead>
+									<th>
+											<input type="checkbox" name="ckAll" id="ckAll" />
+					        		</th>
+											<th>作业名称</th>
+											<th>简介</th>
+									<!--		<th> 考试类型</th>	-->
+									<!--		<th>考试</th>	-->
+									<!--		<th>类型</th>	-->
+											<th>作业分派</th>
+											<th>作业日期</th>
+									<th>操作</th>
+								</thead>
+								<tbody>
+								#if($!{pageInfos})
+									#foreach($!{info} in $!{pageInfos})
+										<tr>	
+											<td>
+													<input type="checkbox" name="ck" id="ck_$!{velocityCount}" value="$!{info.id}"/>
+											</td>	
+														<td>$!{info.taskName}</td>
+														<td>$!{info.summary}</td>
+											<!--			<td>$!{info.examType}</td>	-->
+											<!--			<td>$!{info.examId}</td>	-->
+											<!--			<td>$!{info.type}</td>	-->
+														<td>
+															
+														 #foreach($user in $lhSUserList)
+															#if($!{info.assign} == ${user.id})
+																$!{user.username}
+															#end
+														 #end
+														</td>
+														<td>$!dateTool.format("yyyy-MM-dd",$!{info.assignDate})</td>
+											<td class="last">
+											<a class="btn btn-success btn-xs"  href="javascript:doUrl('$!{basePath}/jeecg/lhTask.do?toEdit&id=$!{info.id}')" ><i class="fa fa-edit"></i> 编辑</a>
+											<a class="btn btn-danger btn-xs" href="javascript:delData('$!{basePath}/jeecg/lhTask.do?doDelete&id=$!{info.id}')"><i class="fa fa-trash-o"></i> 删除</a>
+											</td>
+										</tr>
+									 #end
+								 #end
+								</tbody>
+							</table>
+							<div class="text-right">
+								<!--公用翻页代码-->
+								#set($attr='formSubmit')
+								#showPageList($pageInfos $attr)
+								<!--END公用翻页代码-->
+							</div>
+						</div>
+					</div>
+				</div>  
+			</form>
+		</div>
+	</div>
+</body>
+</html>
+<script>
+$("#ckAll").click(function(){ 
+	if($(this).prop("checked")){ 
+	 $(":checkbox").prop("checked",true) 
+	}else{ 
+	$(":checkbox").prop("checked",false)  
+	} 
+}); 
+
+//jquery获取复选框值    
+function getCkValue(){  
+  var chk_value =[];    
+  $('input[name="ck"]:checked').each(function(){    
+   chk_value.push($(this).val());    
+  });    
+  //alert(chk_value.length==0 ?'你还没有选择任何内容！':chk_value);    
+}
+//获得所有选中行的ID进行批量删除
+function batchDelete() {
+    var ids = [];
+    var check = document.getElementsByName("ck");
+    for(var i=0;i<check.length;i++){
+        if(check[i].checked){
+    		ids.push(check[i].value);
+        }
+    }
+   	if(ids.length > 0) {
+    	parent.layer.confirm('确认进行批量删除吗？', {
+        	btn: ['确定','取消'] //按钮
+    	}, function(){
+       		jQuery.ajax({
+       			url : '$!{basePath}/jeecg/lhTask.do?batchDelete',
+       			data : {
+       				ids : ids,
+       			},
+       			type : 'POST',
+    			dataType: 'json',
+       			traditional:true,
+    			success:function(data) {
+    				if(data.success){
+    					parent.layer.alert(data.msg, {
+    	        	        icon: 1,
+    	        	        shadeClose: false,
+    	        	        title: '提示'
+    	        	    },function(index){
+    						document.getElementById('formSubmit').submit();
+    	        	    	parent.layer.close(index);
+    					});
+    				}else {
+    					layeralert(data.msg,0);
+    				}
+    			},
+    			error: function(data, status, e){  
+    	        	if(data.status == "401"){
+    	        		layeralert("没有权限！",0);
+    					return;
+    				}
+    	        }
+       		});
+		});
+   	}else {
+		layeralert("您还没有选择要删除的行");
+   	}
+}
+//重置按钮    
+function searchReset() {
+	$("#formSubmit").find(":input").val("");
+	$("#formSubmit").submit();
+}
+</script>

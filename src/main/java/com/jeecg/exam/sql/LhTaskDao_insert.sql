@@ -1,0 +1,27 @@
+INSERT  INTO
+	lh_task
+      ( 
+      ID                            
+      ,TASK_NAME                      
+      ,SUMMARY                        
+      ,EXAM_TYPE                      
+      ,EXAM_ID                        
+      ,TYPE                           
+      ,CREATE_BY                      
+      ,CREATE_DATE                    
+      ,ASSIGN                         
+      ,ASSIGN_DATE                    
+      ) 
+values
+      (
+      :lhTask.id                            
+      ,:lhTask.taskName                      
+      ,:lhTask.summary                       
+      ,:lhTask.examType                      
+      ,:lhTask.examId                        
+      ,:lhTask.type                          
+      ,:lhTask.createBy                      
+      ,:lhTask.createDate                    
+      ,:lhTask.assign                        
+      ,:lhTask.assignDate                    
+      )

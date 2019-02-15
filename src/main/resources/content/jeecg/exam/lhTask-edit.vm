@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+#parse("content/base/back/common/head.vm")
+<body style='overflow:scroll;overflow-x:hidden'>
+	<div class="container bs-docs-container" style="width:100%;">
+		<div class="row">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+								<button type="button" class="btn btn-primary" id="formSubmit"><span class="fa fa-save"></span> 保存</button>
+				<button type="button" class="btn btn-default" id="formReturn" data-dismiss="modal" onclick="doUrl('$!{basePath}/jeecg/lhTask.do?list')"><span class="fa fa-arrow-circle-left"></span> 返回</button>
+				</div>
+				<div class="panel-body">
+					<form class="form-horizontal" role="form" id="dailogForm" action="$!{basePath}/jeecg/lhTask.do?doEdit" method="POST">
+						<input type="hidden" id="btn_sub" class="btn_sub" />
+						<input type="hidden" value="$!{lhTask.id}" name="id" id="id" />
+								<div class="form-group mno">
+								    <label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">作业名称</label>
+								    <div class="col-sm-8">
+								    	<input type="text" value="$!{lhTask.taskName}" name="taskName" id="taskName" class="form-control" />
+								    </div>
+								</div>
+								<div class="form-group mno">
+								    <label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">简介</label>
+								    <div class="col-sm-8">
+								    	<input type="text" value="$!{lhTask.summary}" name="summary" id="summary" class="form-control" />
+								    </div>
+								</div>
+								<div class="form-group mno">
+								    <label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;"> 考试类型</label>
+								    <div class="col-sm-8">
+								    	<input type="text" value="$!{lhTask.examType}" name="examType" id="examType" class="form-control" />
+								    </div>
+								</div>
+								<div class="form-group mno">
+								    <label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">考试</label>
+								    <div class="col-sm-8">
+								<!--    	<input type="text" value="$!{lhTask.examId}" name="examId" id="examId" class="form-control" />	-->
+								<input type="text" readonly="readonly" value="" id="parentGroupId" readonly class="form-control" onclick="showMenu();"/>
+								<input type="hidden" value="$!{lhTask.examId}" name="examId" id="pId" class="form-control" />
+								    </div>
+								</div>
+								<div class="form-group mno">
+								    <label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">类型</label>
+								    <div class="col-sm-8">
+								    	<input type="text" value="$!{lhTask.type}" name="type" id="type" class="form-control" />
+								    </div>
+								</div>
+								<div class="form-group mno">
+								    <label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">创建人id</label>
+								    <div class="col-sm-8">
+								    	<input type="text" value="$!{lhTask.createBy}" name="createBy" id="createBy" class="form-control" />
+								    </div>
+								</div>
+								<div class="form-group mno">
+								    <label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">创建日期</label>
+								    <div class="col-sm-8">
+								    	<input type="text" value="$!dateTool.format("yyyy-MM-dd",$!{lhTask.createDate})" name="createDate" id="createDate" class="form-control" onFocus="WdatePicker({dateFmt:'yyyy-MM-dd'})"   style="background: url('$!{basePath}/plug-in-ui/images/datetime.png') no-repeat scroll right center transparent;"  />
+								    </div>
+								</div>
+								<div class="form-group mno">
+								    <label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">作业分派</label>
+								    <div class="col-sm-8">
+								<!--    	<input type="text" value="$!{lhTask.assign}" name="assign" id="assign" class="form-control" />	-->
+										<select name="assign" id="assign" class="form-control">
+										 <option value="" >选择</option>
+										 #foreach($user in $lhSUserList)
+											<option value="${user.id}" #if($!{lhTask.assign} == ${user.id})selected#end>--$!{user.username}</option>
+										 #end
+										</select>
+								    </div>
+								</div>
+								<div class="form-group mno">
+								    <label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">作业日期</label>
+								    <div class="col-sm-8">
+								    	<input type="text" value="$!dateTool.format("yyyy-MM-dd",$!{lhTask.assignDate})" name="assignDate" id="assignDate" class="form-control" onFocus="WdatePicker({dateFmt:'yyyy-MM-dd'})"   style="background: url('$!{basePath}/plug-in-ui/images/datetime.png') no-repeat scroll right center transparent;"  />
+								    </div>
+								</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div id="menuContent" class="menuContent" style="display:none; position: absolute;z-index:100;">
+    	<ul id="treeDemo" class="ztree" style="margin-top:0; width:160px;"></ul>
+    </div>
+</body>
+</html>
+<script type="text/javascript" src="$!{basePath}/plug-in-ui/js/zTree/jquery.ztree.core.js$!{version}"></script>
+<script type="text/javascript" src="$!{basePath}/plug-in-ui/js/zTree/jquery.ztree.excheck.js$!{version}"></script>
+<script type="text/javascript" src="$!{basePath}/plug-in-ui/js/zTree/jquery.ztree.exedit.js$!{version}"></script>
+<script type="text/javascript" src="$!{basePath}/plug-in-ui/js/Validform_v5.3.2.js"></script> 
+<script type="text/javascript" src="$!{basePath}/plug-in-ui/js/forminit.p3.js"></script> 
+<script type="text/javascript">
+var IDMark_A = "_a";
+
+function showMenu() {
+var cityObj = $("#parentGroupId");
+var cityOffset = $("#parentGroupId").offset();
+	if($("#menuContent").is(':hidden')){
+     $("#menuContent").css({left:cityOffset.left + "px", top:cityOffset.top + cityObj.outerHeight() + "px"}).slideDown("fast");
+	}else{
+	  $("#menuContent").fadeOut("fast");
+	}
+    $("body").bind("mousedown", onBodyDown);
+}
+function hideMenu() {
+	$("#menuContent").fadeOut("fast");
+	$("body").unbind("mousedown", onBodyDown);
+}
+function onBodyDown(event) {
+	if (!(event.target.id == "parentGroupId" || event.target.id == "menuContent" || $(event.target).parents("#menuContent").length>0)) {
+		hideMenu();
+	}
+}
+var setting = {
+//			check: {
+//				enable: true,
+//				chkStyle: "radio",
+//				radioType: "all"
+//			},
+				check: {
+					enable: true,
+					radioType: "all",
+					chkboxType:{"Y" : "undefined", "N" : "" }
+				},
+			view: {
+				addHoverDom: addHoverDom,
+				removeHoverDom: removeHoverDom,
+				dblClickExpand: false
+			},
+			data: {
+				simpleData: {
+					enable: true,
+					idKey: "id",
+					pIdKey: "pId",
+					rootPId: null
+				}
+			},
+			callback: {
+				onClick: onClick,
+				onCheck: onCheck
+			}
+		};
+function onClick(e, treeId, treeNode) {
+   var tree = zTree.getZTreeObj("treeDemo");
+	tree.checkNode(treeNode, !treeNode.checked, null, true);
+	return false;
+}
+function onCheck(e, treeId, treeNode) {
+	var tree = zTree.getZTreeObj("treeDemo"),
+	nodes = tree.getCheckedNodes(true),
+	v = "",vid = "";
+	for (var i=0, l=nodes.length; i<l; i++) {
+		v += nodes[i].name + ",";
+		vid += nodes[i].id + ",";
+	}
+	if (v.length > 0 ) v = v.substring(0, v.length-1);
+	if (vid.length > 0 ) vid = vid.substring(0, vid.length-1);
+	$("#parentGroupId").val(v);
+	$("#pId").val(vid);
+}
+function addHoverDom(treeId, treeNode) {
+	if (treeNode.parentNode && treeNode.parentNode.id!=1) return;
+	var aObj = $("#" + treeNode.tId + IDMark_A);
+		if ($("#diyBtn_"+treeNode.id).length>0) return;
+		//var editStr = "<span id='diyBtn_" +treeNode.id+ "'>编码:"+treeNode.id+"</span>";
+		//aObj.after(editStr);
+}
+function removeHoverDom(treeId, treeNode) {
+		$("#diyBtn_"+treeNode.id).unbind().remove();
+		$("#diyBtn_space_" +treeNode.id).unbind().remove();
+}
+var zNodes;
+$(document).ready(function(){
+	jQuery.ajax({  
+	        async : false,  
+	        cache:false,  
+	        type: 'POST',  
+	        dataType : "json",  
+	        url: "$!{basePath}/jeecg/lhTask.do?getAuthTree",//请求的action路径  
+	        error: function () {//请求失败处理函数  
+	            alert('请求失败');  
+	        },  
+	        success:function(data){ //请求成功后处理函数。    
+	            zNodes = data.obj;   //把后台封装好的简单Json格式赋给zNodes  
+	        }  
+	    });  
+	zTree.init($("#treeDemo"), setting, zNodes);
+	var strs=$("#pId").val().split(",");
+	var node;
+	sname="";
+	var treeObj = zTree.getZTreeObj("treeDemo");
+	if(strs!=""){
+		for (var i=0, l=strs.length; i<l; i++) {
+			node=treeObj.getNodeByParam("id", strs[i]);
+			treeObj.selectNode(node);
+			treeObj.checkNode(node, true, null, false);
+			sname += node.name + ",";
+		}
+		if (sname.length > 0 ) sname = sname.substring(0, sname.length-1);
+		$("#parentGroupId").val(sname);
+	}
+	
+});
+</script>
