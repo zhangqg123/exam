@@ -26,6 +26,8 @@ import com.jeecg.exam.entity.LhQuestionColumnEntity;
 import com.jeecg.exam.service.LhExamQuestionService;
 import com.jeecg.exam.service.LhExamService;
 import com.jeecg.exam.service.LhQuestionColumnService;
+import com.jeecg.user.entity.LhSUserEntity;
+import com.jeecg.user.service.LhSUserService;
 
  /**
  * 描述：考试表
@@ -42,7 +44,9 @@ public class LhExamController extends BaseController{
   private LhQuestionColumnService lhQuestionColumnService;
   @Autowired
   private LhExamQuestionService lhExamQuestionService;
-
+  @Autowired
+  private LhSUserService lhSUserService;
+  
 	/**
 	  * 列表页面
 	  * @return
@@ -62,9 +66,13 @@ public class LhExamController extends BaseController{
 				MiniDaoPage<LhExamEntity> list =  lhExamService.getAll(query,pageNo,pageSize);
 				MiniDaoPage<LhQuestionColumnEntity> qclist =  lhQuestionColumnService.getAll(new LhQuestionColumnEntity(),1,199);
 				List<LhQuestionColumnEntity> columnList = qclist.getResults();
+				LhSUserEntity lhSUser=new LhSUserEntity();
+				MiniDaoPage<LhSUserEntity> uList = lhSUserService.getAll(lhSUser, 1, 200); 
+				List<LhSUserEntity> lhSUserList = uList.getResults();
 				VelocityContext velocityContext = new VelocityContext();
 				velocityContext.put("lhExam",query);
 				velocityContext.put("columnList",columnList);
+				velocityContext.put("lhSUserList",lhSUserList);
 				velocityContext.put("pageInfos",SystemTools.convertPaginatedList(list));
 				String viewName = "jeecg/exam/lhExam-list.vm";
 				ViewVelocity.view(request,response,viewName,velocityContext);
@@ -100,8 +108,12 @@ public class LhExamController extends BaseController{
 		}
 		MiniDaoPage<LhQuestionColumnEntity> list =  lhQuestionColumnService.getAll(lhQuestionColumn,1,199);
 		List<LhQuestionColumnEntity> columnList = list.getResults();
+		LhSUserEntity lhSUser=new LhSUserEntity();
+		MiniDaoPage<LhSUserEntity> uList = lhSUserService.getAll(lhSUser, 1, 200); 
+		List<LhSUserEntity> lhSUserList = uList.getResults();
 		VelocityContext velocityContext = new VelocityContext();
 		velocityContext.put("columnList",columnList);
+		velocityContext.put("lhSUserList",lhSUserList);
 		String viewName = "jeecg/exam/lhExam-add.vm";
 		ViewVelocity.view(request,response,viewName,velocityContext);
 	}
@@ -144,8 +156,12 @@ public class LhExamController extends BaseController{
 		List<LhQuestionColumnEntity> columnList = list.getResults();
 		VelocityContext velocityContext = new VelocityContext();
 		LhExamEntity lhExam = lhExamService.get(id);
+		LhSUserEntity lhSUser=new LhSUserEntity();
+		MiniDaoPage<LhSUserEntity> uList = lhSUserService.getAll(lhSUser, 1, 200); 
+		List<LhSUserEntity> lhSUserList = uList.getResults();
 		velocityContext.put("columnList",columnList);
 		velocityContext.put("lhExam",lhExam);
+		velocityContext.put("lhSUserList",lhSUserList);
 		String viewName = "jeecg/exam/lhExam-edit.vm";
 		ViewVelocity.view(request,response,viewName,velocityContext);
 	}

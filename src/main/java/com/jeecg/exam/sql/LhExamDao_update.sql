@@ -24,6 +24,9 @@ SET
 	   <#if lhExam.number ?exists>
 		   NUMBER = :lhExam.number,
 		</#if>
+	   <#if lhExam.assign ?exists>
+		   assign = :lhExam.assign,
+		</#if>
 	   <#if lhExam.createBy ?exists>
 		   CREATE_BY = :lhExam.createBy,
 		</#if>

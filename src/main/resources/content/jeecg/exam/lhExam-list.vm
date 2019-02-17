@@ -100,7 +100,7 @@
 											<th>题目个数</th>
 									<!--		<th>考试类型</th>	-->
 											<th>答题时间</th>
-											<th>考试次数</th>
+											<th>考试分派</th>
 									<!--		<th>备注</th>
 											<th>正确答案</th>	-->
 									<th>操作</th>
@@ -125,7 +125,14 @@
 														<td>$!{info.questionNumber}</td>
 											<!--			<td>$!{info.examType}</td>	-->
 														<td>$!{info.answerTime}</td>
-														<td>$!{info.number}</td>
+														<td>
+															
+														 #foreach($user in $lhSUserList)
+															#if($!{info.assign} == ${user.id})
+																$!{user.username}
+															#end
+														 #end
+														</td>
 											<!--			<td>$!{info.remark}</td>
 														<td>$!{info.rightAnswer}</td>	-->
 											<td class="last">

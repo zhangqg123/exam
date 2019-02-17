@@ -8,7 +8,8 @@ INSERT  INTO
       ,QUESTION_NUMBER                
       ,EXAM_TYPE                      
       ,ANSWER_TIME                    
-      ,NUMBER                         
+      ,NUMBER          
+      ,assign
       ,CREATE_BY                      
       ,CREATE_DATE                    
       ,REMARK                         
@@ -23,7 +24,8 @@ values
       ,:lhExam.questionNumber                
       ,:lhExam.examType                      
       ,:lhExam.answerTime                    
-      ,:lhExam.number                        
+      ,:lhExam.number     
+      ,:lhExam.assign
       ,:lhExam.createBy                      
       ,:lhExam.createDate                    
       ,:lhExam.remark                        

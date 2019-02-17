@@ -30,6 +30,10 @@
 		    /* 考试次数 */
 			and le.NUMBER = :lhExam.number
 		</#if>
+		<#if ( lhExam.assign )?? && lhExam.assign ?length gt 0>
+		    /* 考试次数 */
+			and le.assign = :lhExam.assign
+		</#if>
 		<#if ( lhExam.createBy )?? && lhExam.createBy ?length gt 0>
 		    /* 创建人id */
 			and le.CREATE_BY = :lhExam.createBy

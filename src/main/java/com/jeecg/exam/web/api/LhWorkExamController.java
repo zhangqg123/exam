@@ -79,6 +79,22 @@ public class LhWorkExamController extends BaseController{
 		return j;
 	}
 	
+	@RequestMapping(value="/assignList")
+	public @ResponseBody AjaxJson assignList(@ModelAttribute LhExamEntity query, HttpServletRequest request, HttpServletResponse response ,
+			@RequestParam(required = false, value = "pageNumber", defaultValue = "1") int pageNo,
+			@RequestParam(required = false, value = "pageSize", defaultValue = "6") int pageSize) throws Exception {
+		AjaxJson j = new AjaxJson();
+		String assign = request.getHeader("login-code");
+		if(assign!=null&&assign!=""){
+			query.setAssign(assign);
+			MiniDaoPage<LhExamEntity> list = lhExamService.getAll(query, pageNo, pageSize);
+			// 分页数据
+	//		List<?> resut = list.getResults();
+			j.setObj(list.getResults());
+		}
+		return j;
+	}
+	
 	@RequestMapping(value="/questionList")
 	public @ResponseBody String questionList(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String examId = request.getParameter("examId");
