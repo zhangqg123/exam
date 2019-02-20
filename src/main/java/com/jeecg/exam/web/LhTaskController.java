@@ -1,6 +1,7 @@
 package com.jeecg.exam.web;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -109,8 +110,11 @@ public class LhTaskController extends BaseController{
 	 */
 	@RequestMapping(params = "doAdd",method ={RequestMethod.GET, RequestMethod.POST})
 	@ResponseBody
-	public AjaxJson doAdd(@ModelAttribute LhTaskEntity lhTask){
+	public AjaxJson doAdd(HttpServletRequest request,@ModelAttribute LhTaskEntity lhTask){
 		AjaxJson j = new AjaxJson();
+		String userName=(String) request.getSession().getAttribute("loginUserName");		
+		lhTask.setCreateBy(userName);
+		lhTask.setCreateDate(new Date());
 		try {
 			lhTaskService.insert(lhTask);
 			j.setMsg("保存成功");

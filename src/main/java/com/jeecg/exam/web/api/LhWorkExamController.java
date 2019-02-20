@@ -28,10 +28,12 @@ import com.jeecg.exam.entity.LhExamEntity;
 import com.jeecg.exam.entity.LhExamScoreEntity;
 import com.jeecg.exam.entity.LhQuestionColumnEntity;
 import com.jeecg.exam.entity.LhQuestionEntity;
+import com.jeecg.exam.entity.LhTaskEntity;
 import com.jeecg.exam.service.LhExamScoreService;
 import com.jeecg.exam.service.LhExamService;
 import com.jeecg.exam.service.LhQuestionColumnService;
 import com.jeecg.exam.service.LhQuestionService;
+import com.jeecg.exam.service.LhTaskService;
 
  /**
  * 描述：考试表
@@ -50,6 +52,8 @@ public class LhWorkExamController extends BaseController{
   private LhQuestionColumnService lhQuestionColumnService;
   @Autowired
   private LhExamScoreService lhExamScoreService;
+  @Autowired
+  private LhTaskService lhTaskService;
 
 	@RequestMapping(value="/columnList")
 	public @ResponseBody String columnList(@ModelAttribute LhQuestionColumnEntity query, HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -80,14 +84,14 @@ public class LhWorkExamController extends BaseController{
 	}
 	
 	@RequestMapping(value="/assignList")
-	public @ResponseBody AjaxJson assignList(@ModelAttribute LhExamEntity query, HttpServletRequest request, HttpServletResponse response ,
+	public @ResponseBody AjaxJson assignList(@ModelAttribute LhTaskEntity query, HttpServletRequest request, HttpServletResponse response ,
 			@RequestParam(required = false, value = "pageNumber", defaultValue = "1") int pageNo,
 			@RequestParam(required = false, value = "pageSize", defaultValue = "6") int pageSize) throws Exception {
 		AjaxJson j = new AjaxJson();
 		String assign = request.getHeader("login-code");
 		if(assign!=null&&assign!=""){
 			query.setAssign(assign);
-			MiniDaoPage<LhExamEntity> list = lhExamService.getAll(query, pageNo, pageSize);
+			MiniDaoPage<LhTaskEntity> list = lhTaskService.getAll(query, pageNo, pageSize);
 			// 分页数据
 	//		List<?> resut = list.getResults();
 			j.setObj(list.getResults());
