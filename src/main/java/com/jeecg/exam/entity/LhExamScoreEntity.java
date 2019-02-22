@@ -16,6 +16,7 @@ public class LhExamScoreEntity implements Serializable{
 	private String examName;	/**	 *openId	 */	private String openId;	/**	 *分数	 */	private Integer score;
 	
 	private Integer number;
+	private Date createDate;
 		public String getId() {	    return this.id;	}	public void setId(String id) {	    this.id=id;	}	public String getExamId() {	    return this.examId;	}	public void setExamId(String examId) {	    this.examId=examId;	}	public String getOpenId() {	    return this.openId;	}	public void setOpenId(String openId) {	    this.openId=openId;	}	public Integer getScore() {	    return this.score;	}	public void setScore(Integer score) {	    this.score=score;	}
 	public Integer getNumber() {
 		return number;
@@ -28,6 +29,12 @@ public class LhExamScoreEntity implements Serializable{
 	}
 	public void setExamName(String examName) {
 		this.examName = examName;
+	}
+	public Date getCreateDate() {
+		return createDate;
+	}
+	public void setCreateDate(Date createDate) {
+		this.createDate = createDate;
 	}
 }
 

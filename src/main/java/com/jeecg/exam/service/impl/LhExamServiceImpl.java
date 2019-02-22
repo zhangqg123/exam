@@ -109,6 +109,7 @@ public class LhExamServiceImpl implements LhExamService {
 //	    	}
 	    	lhExamScore.setExamName(lhExam.getExamName());
 	    	lhExamScore.setNumber(lhExamScore.getNumber()+1);
+	    	lhExamScore.setCreateDate(new Date());
     		lhExamScoreService.update(lhExamScore);
 	    }else{
 		    lhExamScore=new LhExamScoreEntity();
@@ -117,6 +118,7 @@ public class LhExamServiceImpl implements LhExamService {
 		    lhExamScore.setOpenId(openId);
 		    lhExamScore.setScore(totalScore);
 		    lhExamScore.setNumber(1);
+	    	lhExamScore.setCreateDate(new Date());
 		    lhExamScoreService.insert(lhExamScore);
 	    }
 		Map<String,Object> map = new HashMap<String,Object>();

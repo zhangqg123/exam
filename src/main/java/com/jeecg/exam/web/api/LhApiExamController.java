@@ -37,12 +37,12 @@ import com.jeecg.exam.service.LhExamService;
 import com.jeecg.exam.service.LhExamStudentService;
 import com.jeecg.exam.service.LhQuestionColumnService;
 import com.jeecg.exam.service.LhQuestionService;
-import com.jeecg.lhs.account.entity.LhSAccountEntity;
-import com.jeecg.lhs.account.service.LhSAccountService;
-import com.jeecg.user.entity.LhSUserEntity;
-import com.jeecg.user.service.LhSUserService;
-import com.jeecg.user.utils.AES128Util;
-import com.jeecg.user.utils.PasswordUtil;
+import com.jeecg.lhs.entity.LhSAccountEntity;
+import com.jeecg.lhs.entity.LhSUserEntity;
+import com.jeecg.lhs.service.LhSAccountService;
+import com.jeecg.lhs.service.LhSUserService;
+import com.jeecg.lhs.utils.AES128Util;
+import com.jeecg.lhs.utils.PasswordUtil;
 
  /**
  * 描述：考试表

@@ -6,6 +6,7 @@ INSERT  INTO
       ,OPEN_ID                        
       ,SCORE     
       ,NUMBER
+      ,CREATE_DATE
       ) 
 values
       (
@@ -13,5 +14,6 @@ values
       ,:lhExamScore.examId                        
       ,:lhExamScore.openId                        
       ,:lhExamScore.score    
-      ,:lhExamScore.number      
+      ,:lhExamScore.number  
+      ,:lhExamScore.createDate
       )

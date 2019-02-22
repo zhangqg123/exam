@@ -15,4 +15,7 @@ SET
 	   <#if lhExamScore.number ?exists>
 		   NUMBER = :lhExamScore.number,
 		</#if>
+	   <#if lhExamScore.createDate ?exists>
+		   create_date = :lhExamScore.createDate,
+		</#if>
 WHERE id = :lhExamScore.id

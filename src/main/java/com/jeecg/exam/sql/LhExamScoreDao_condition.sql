@@ -18,3 +18,7 @@
 		    /* 分数 */
 			and les.NUMBER = :lhExamScore.number
 		</#if>
+		<#if ( lhExamScore.createDate )?? && lhExamScore.createDate ?length gt 0>
+		    /* 分数 */
+			and les.create_date = :lhExamScore.createDate
+		</#if>

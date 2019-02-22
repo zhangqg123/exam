@@ -26,8 +26,9 @@ import com.jeecg.exam.entity.LhQuestionColumnEntity;
 import com.jeecg.exam.service.LhExamQuestionService;
 import com.jeecg.exam.service.LhExamService;
 import com.jeecg.exam.service.LhQuestionColumnService;
-import com.jeecg.user.entity.LhSUserEntity;
-import com.jeecg.user.service.LhSUserService;
+import com.jeecg.lhs.entity.LhSUserEntity;
+import com.jeecg.lhs.service.LhSUserService;
+
 
  /**
  * 描述：考试表

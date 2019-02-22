@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.jeecg.lhs.account.entity.LhSAccountEntity;
-import com.jeecg.lhs.account.service.LhSAccountService;
+import com.jeecg.lhs.entity.LhSAccountEntity;
+import com.jeecg.lhs.service.LhSAccountService;
 import com.jeecg.signin.dao.SigninDateDao;
 import com.jeecg.signin.entity.SigninDateEntity;
 import com.jeecg.signin.service.SigninDateService;
