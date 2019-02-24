@@ -38,8 +38,10 @@ import com.jeecg.exam.service.LhExamStudentService;
 import com.jeecg.exam.service.LhQuestionColumnService;
 import com.jeecg.exam.service.LhQuestionService;
 import com.jeecg.lhs.entity.LhSAccountEntity;
+import com.jeecg.lhs.entity.LhSDeptEntity;
 import com.jeecg.lhs.entity.LhSUserEntity;
 import com.jeecg.lhs.service.LhSAccountService;
+import com.jeecg.lhs.service.LhSDeptService;
 import com.jeecg.lhs.service.LhSUserService;
 import com.jeecg.lhs.utils.AES128Util;
 import com.jeecg.lhs.utils.PasswordUtil;
@@ -65,6 +67,8 @@ public class LhApiExamController extends BaseController{
 	private LhSUserService lhSUserService;
 	@Autowired
 	private LhSAccountService lhSAccountService;
+	@Autowired
+	private LhSDeptService lhSDeptService;
   
 	@RequestMapping(value="/columnList")
 	public @ResponseBody String columnList(@ModelAttribute LhQuestionColumnEntity query, HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -99,6 +103,14 @@ public class LhApiExamController extends BaseController{
 		Map<String,Object> attributes=new HashMap<String,Object>();
 		attributes.put("startTime", System.currentTimeMillis());
 		j.setAttributes(attributes);
+		return j;
+	}
+	
+	@RequestMapping(value="/dept")
+	public @ResponseBody AjaxJson dept(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		AjaxJson j = new AjaxJson();
+		MiniDaoPage<LhSDeptEntity> list = lhSDeptService.getAll(new LhSDeptEntity(), 1, 100);
+		j.setObj(list.getResults());
 		return j;
 	}
 	
@@ -182,10 +194,12 @@ public class LhApiExamController extends BaseController{
 	public @ResponseBody AjaxJson userRegister(HttpServletRequest request, @RequestBody LhSUserEntity lhSUser) {
 		AjaxJson j = new AjaxJson();
 		String password = lhSUser.getPassword();
+		String deptid=lhSUser.getDeptid();
 		try {
 			lhSUser=lhSUserService.get(lhSUser.getId());
 			Map<String,Object> attributes=new HashMap<String,Object>();
 			lhSUser.setPassword(PasswordUtil.encrypt(lhSUser.getUsername(), password, PasswordUtil.getStaticSalt()));
+			lhSUser.setDeptid(deptid);
 			lhSUser.setStatus(3);
 			lhSUserService.update(lhSUser);
 			j.setObj(lhSUser.getId());
