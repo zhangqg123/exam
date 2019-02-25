@@ -29,7 +29,9 @@ import com.jeecg.exam.entity.LhTaskEntity;
 import com.jeecg.exam.service.LhExamService;
 import com.jeecg.exam.service.LhQuestionColumnService;
 import com.jeecg.exam.service.LhTaskService;
+import com.jeecg.lhs.entity.LhSDeptEntity;
 import com.jeecg.lhs.entity.LhSUserEntity;
+import com.jeecg.lhs.service.LhSDeptService;
 import com.jeecg.lhs.service.LhSUserService;
 
  /**
@@ -48,7 +50,7 @@ public class LhTaskController extends BaseController{
   @Autowired
   private LhQuestionColumnService lhQuestionColumnService;
   @Autowired
-  private LhSUserService lhSUserService;
+  private LhSDeptService lhSDeptService;
   
 	/**
 	  * 列表页面
@@ -61,13 +63,13 @@ public class LhTaskController extends BaseController{
 			try {
 			 	LOG.info(request, " back list");
 			 	//分页数据
-				LhSUserEntity lhSUser=new LhSUserEntity();
-				MiniDaoPage<LhSUserEntity> slist = lhSUserService.getAll(lhSUser, 1, 200); 
-				List<LhSUserEntity> lhSUserList = slist.getResults();
+				LhSDeptEntity lhSDept=new LhSDeptEntity();
+				MiniDaoPage<LhSDeptEntity> dlist = lhSDeptService.getAll(lhSDept, 1, 200); 
+				List<LhSDeptEntity> lhSDeptList = dlist.getResults();
 				MiniDaoPage<LhTaskEntity> list =  lhTaskService.getAll(query,pageNo,pageSize);
 				VelocityContext velocityContext = new VelocityContext();
 				velocityContext.put("lhTask",query);
-				velocityContext.put("lhSUserList",lhSUserList);
+				velocityContext.put("lhSDeptList",lhSDeptList);
 				velocityContext.put("pageInfos",SystemTools.convertPaginatedList(list));
 				String viewName = "jeecg/exam/lhTask-list.vm";
 				ViewVelocity.view(request,response,viewName,velocityContext);
@@ -95,12 +97,12 @@ public class LhTaskController extends BaseController{
 	 */
 	@RequestMapping(params = "toAdd",method ={RequestMethod.GET, RequestMethod.POST})
 	public void toAddDialog(HttpServletRequest request,HttpServletResponse response)throws Exception{
-		LhSUserEntity lhSUser=new LhSUserEntity();
-		MiniDaoPage<LhSUserEntity> list = lhSUserService.getAll(lhSUser, 1, 200); 
-		List<LhSUserEntity> lhSUserList = list.getResults();
+		LhSDeptEntity lhSDept=new LhSDeptEntity();
+		MiniDaoPage<LhSDeptEntity> list = lhSDeptService.getAll(lhSDept, 1, 200); 
+		List<LhSDeptEntity> lhSDeptList = list.getResults();
 		VelocityContext velocityContext = new VelocityContext();
 		String viewName = "jeecg/exam/lhTask-add.vm";
-		velocityContext.put("lhSUserList",lhSUserList);
+		velocityContext.put("lhSDeptList",lhSDeptList);
 		ViewVelocity.view(request,response,viewName,velocityContext);
 	}
 
@@ -132,13 +134,13 @@ public class LhTaskController extends BaseController{
 	 */
 	@RequestMapping(params="toEdit",method = RequestMethod.GET)
 	public void toEdit(@RequestParam(required = true, value = "id" ) String id,HttpServletResponse response,HttpServletRequest request) throws Exception{
-		LhSUserEntity lhSUser=new LhSUserEntity();
-		MiniDaoPage<LhSUserEntity> list = lhSUserService.getAll(lhSUser, 1, 200); 
-		List<LhSUserEntity> lhSUserList = list.getResults();
+		LhSDeptEntity lhSDept=new LhSDeptEntity();
+		MiniDaoPage<LhSDeptEntity> list = lhSDeptService.getAll(lhSDept, 1, 200); 
+		List<LhSDeptEntity> lhSDeptList = list.getResults();
 		VelocityContext velocityContext = new VelocityContext();
 		LhTaskEntity lhTask = lhTaskService.get(id);
 		velocityContext.put("lhTask",lhTask);
-		velocityContext.put("lhSUserList",lhSUserList);
+		velocityContext.put("lhSDeptList",lhSDeptList);
 		String viewName = "jeecg/exam/lhTask-edit.vm";
 		ViewVelocity.view(request,response,viewName,velocityContext);
 	}

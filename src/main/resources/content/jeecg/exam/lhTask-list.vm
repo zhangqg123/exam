@@ -103,9 +103,9 @@
 											<!--			<td>$!{info.type}</td>	-->
 														<td>
 															
-														 #foreach($user in $lhSUserList)
-															#if($!{info.assign} == ${user.id})
-																$!{user.username}
+														 #foreach($dept in $lhSDeptList)
+															#if($!{info.assign} == ${dept.id})
+																$!{dept.deptName}
 															#end
 														 #end
 														</td>

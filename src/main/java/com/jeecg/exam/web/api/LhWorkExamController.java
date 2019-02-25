@@ -34,6 +34,8 @@ import com.jeecg.exam.service.LhExamService;
 import com.jeecg.exam.service.LhQuestionColumnService;
 import com.jeecg.exam.service.LhQuestionService;
 import com.jeecg.exam.service.LhTaskService;
+import com.jeecg.lhs.entity.LhSUserEntity;
+import com.jeecg.lhs.service.LhSUserService;
 
  /**
  * 描述：考试表
@@ -54,6 +56,8 @@ public class LhWorkExamController extends BaseController{
   private LhExamScoreService lhExamScoreService;
   @Autowired
   private LhTaskService lhTaskService;
+  @Autowired
+  private LhSUserService lhSUserService;
 
 	@RequestMapping(value="/columnList")
 	public @ResponseBody String columnList(@ModelAttribute LhQuestionColumnEntity query, HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -88,7 +92,9 @@ public class LhWorkExamController extends BaseController{
 			@RequestParam(required = false, value = "pageNumber", defaultValue = "1") int pageNo,
 			@RequestParam(required = false, value = "pageSize", defaultValue = "6") int pageSize) throws Exception {
 		AjaxJson j = new AjaxJson();
-		String assign = request.getHeader("login-code");
+		String id = request.getHeader("login-code");
+		LhSUserEntity lhSUser = lhSUserService.get(id);
+		String assign = lhSUser.getDeptid();
 		if(assign!=null&&assign!=""){
 			query.setAssign(assign);
 			MiniDaoPage<LhTaskEntity> list = lhTaskService.getAll(query, pageNo, pageSize);

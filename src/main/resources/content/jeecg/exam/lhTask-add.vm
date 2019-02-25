@@ -62,8 +62,8 @@
 									<!--		<input type="text" value="$!{lhTask.assign}" name="assign" id="assign" class="form-control" />	-->
 											<select id="assign" name="assign"  class="form-control">
 											 <option value="" >选择</option>
-											 #foreach($user in $lhSUserList)
-												<option value="${user.id}" >--$!{user.username}</option>
+											 #foreach($dept in $lhSDeptList)
+												<option value="${dept.id}" >--$!{dept.deptName}</option>
 											 #end
 											</select>
 									</div>
