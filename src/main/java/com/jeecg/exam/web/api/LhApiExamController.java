@@ -212,6 +212,49 @@ public class LhApiExamController extends BaseController{
 		}
 		return j;
 	}
+	
+	@RequestMapping("/changeDept")
+	public @ResponseBody AjaxJson changeDept(HttpServletRequest request, HttpServletResponse response) {
+		AjaxJson j = new AjaxJson();
+    	String deptid=request.getParameter("deptid");
+		String id = request.getHeader("login-code");
+		try {
+			LhSUserEntity lhSUser = lhSUserService.get(id);
+			lhSUser.setDeptid(deptid);
+			lhSUserService.update(lhSUser);
+			j.setSuccess(true);
+		} catch (Exception e) {
+			e.printStackTrace();
+			j.setSuccess(false);
+		}
+		return j;
+	}
+	
+	@RequestMapping("/registerCode")
+	public @ResponseBody AjaxJson registerCode(HttpServletRequest request, HttpServletResponse response) {
+		AjaxJson j = new AjaxJson();
+		String id = request.getHeader("login-code");
+		LhSUserEntity lhSUser=new LhSUserEntity();
+		lhSUser.setId(id);
+		try {
+			MiniDaoPage<LhSUserEntity> list = lhSUserService.getAll(lhSUser, 1, 10);
+			List<LhSUserEntity> lhSUserList = list.getResults();
+			if(lhSUserList.size()==1){
+				lhSUser=lhSUserList.get(0);
+				Map<String,Object> attributes=new HashMap<String,Object>();
+				attributes.put("status", lhSUser.getStatus());
+				j.setAttributes(attributes);
+				j.setSuccess(true);
+			}else{
+				j.setSuccess(false);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			j.setSuccess(false);
+		}
+		return j;
+	}
+
 	@RequestMapping("/idCardLogin")
 	public @ResponseBody AjaxJson idCardLogin(HttpServletRequest request, HttpServletResponse response) {
 		//TODO 验证身份证号接口
