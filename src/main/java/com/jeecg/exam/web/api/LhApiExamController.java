@@ -113,6 +113,7 @@ public class LhApiExamController extends BaseController{
 		j.setObj(list.getResults());
 		return j;
 	}
+	
 	@RequestMapping(value="/userPhone")
 	public @ResponseBody AjaxJson userPhone(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		AjaxJson j = new AjaxJson();
@@ -127,6 +128,25 @@ public class LhApiExamController extends BaseController{
 			if(list.getResults()!=null&&list.getResults().size()>0){
 				j.setSuccess(true);
 				j.setObj(list.getResults().get(0));
+			}
+		}
+		return j;
+	}
+	
+	@RequestMapping(value="/userList")
+	public @ResponseBody AjaxJson userList(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		AjaxJson j = new AjaxJson();
+		j.setSuccess(false);
+		String deptid = request.getParameter("deptid");
+		String xcxId = request.getParameter("xcxId");
+		if(deptid!=null&&xcxId!=null){
+			LhSUserEntity lhSUser=new LhSUserEntity();
+			lhSUser.setDeptid(deptid);
+			lhSUser.setXcxid(xcxId);
+			MiniDaoPage<LhSUserEntity> list = lhSUserService.getAll(lhSUser, 1, 100);
+			if(list.getResults()!=null&&list.getResults().size()>0){
+				j.setSuccess(true);
+				j.setObj(list.getResults());
 			}
 		}
 		return j;
