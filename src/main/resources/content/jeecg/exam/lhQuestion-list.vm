@@ -38,7 +38,7 @@
 									<th>
 											<input type="checkbox" name="ckAll" id="ckAll" />
 					        		</th>
-									<!--		<th>题目内容</th>	-->
+											<th>题目内容</th>	-->
 											<th>题目简介</th>
 									<!--
 											<th>选择答案</th>
@@ -74,6 +74,7 @@
 											<!--			<td>$!{info.remark}</td>	-->
 											<td class="last">
 											<a class="btn btn-success btn-xs"  href="javascript:doUrl('$!{basePath}/jeecg/lhQuestion.do?toEdit&id=$!{info.id}')" ><i class="fa fa-edit"></i> 编辑</a>
+											<a class="btn btn-success btn-xs"  href="javascript:doUrl('$!{basePath}/jeecg/lhQuestion.do?toDetail&id=$!{info.id}')" ><i class="fa fa-edit"></i> 详情</a>
 											<a class="btn btn-danger btn-xs" href="javascript:delData('$!{basePath}/jeecg/lhQuestion.do?doDelete&id=$!{info.id}')"><i class="fa fa-trash-o"></i> 删除</a>
 											</td>
 										</tr>

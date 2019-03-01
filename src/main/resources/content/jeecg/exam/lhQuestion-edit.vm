@@ -40,17 +40,17 @@
 								<div class="form-group mno">
 								    <label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">题目内容</label>
 								    <div class="col-sm-8">
-								<!--    	<input type="text" value="$!{lhQuestion.subject}" name="subject" id="subject" class="form-control" datatype="*"/>	-->
-								<textarea name="subject" id="subject" style="width: 880px;height:300px">$!{lhQuestion.subject}</textarea>
-							    <script type="text/javascript">
-							   //     var editor = UE.getEditor('subject');
-                                    var editor = UE.getEditor('subject', {
-                                        toolbars: [[
-                                            'fullscreen', 'source', '|',
-                                            'bold', 'italic', 'underline', '|', 'fontsize', '|', 'simpleupload', 'insertimage', 'emotion','|', 'scrawl', 'insertvideo', 'music', 'attachment','kityformula', 'preview'
-                                        ]]
-                                    });		
-							    </script>
+									<!--		<input type="text" value="$!{lhQuestion.subject}" name="subject" id="subject" class="form-control" datatype="*"/>	-->
+            								<textarea name="subject" id="subject" style="height:200px">$!{lhQuestion.subject}</textarea>
+            							    <script type="text/javascript">
+            							   //     var editor = UE.getEditor('subject');
+                                                var editor = UE.getEditor('subject', {
+                                                    toolbars: [[
+                                                        'fullscreen', 'source', '|',
+                                                        'bold', 'italic', 'underline', '|', 'fontsize', '|', 'simpleupload', 'insertimage', 'emotion','|', 'scrawl', 'insertvideo', 'music', 'attachment','kityformula', 'preview'
+                                                    ]]
+                                                });		
+            								</script>
 								    </div>
 								</div>	
 								#if($!{questionList.size()} > 1)
@@ -186,6 +186,7 @@ function preSubmit() {
 	}
 //	$("#formSubmit").submit();
 }
+
 
 </script>
 <script type="text/javascript" src="$!{basePath}/plug-in-ui/js/Validform_v5.3.2.js"></script> 
