@@ -12,7 +12,8 @@ INSERT  INTO
       ,NUMBER                         
       ,CREATE_BY                      
       ,CREATE_DATE                    
-      ,REMARK                         
+      ,REMARK    
+      ,analysis
       ) 
 values
       (
@@ -28,4 +29,5 @@ values
       ,:lhQuestion.createBy                      
       ,:lhQuestion.createDate                    
       ,:lhQuestion.remark                        
+      ,:lhQuestion.analysis                       
       )

@@ -94,13 +94,15 @@ public class LhWorkExamController extends BaseController{
 		AjaxJson j = new AjaxJson();
 		String id = request.getHeader("login-code");
 		LhSUserEntity lhSUser = lhSUserService.get(id);
-		String assign = lhSUser.getDeptid();
-		if(assign!=null&&assign!=""){
-			query.setAssign(assign);
-			MiniDaoPage<LhTaskEntity> list = lhTaskService.getAll(query, pageNo, pageSize);
-			// 分页数据
-	//		List<?> resut = list.getResults();
-			j.setObj(list.getResults());
+		if(lhSUser!=null){
+			String assign = lhSUser.getDeptid();
+			if(assign!=null&&assign!=""){
+				query.setAssign(assign);
+				MiniDaoPage<LhTaskEntity> list = lhTaskService.getAll(query, pageNo, pageSize);
+				// 分页数据
+		//		List<?> resut = list.getResults();
+				j.setObj(list.getResults());
+			}
 		}
 		return j;
 	}

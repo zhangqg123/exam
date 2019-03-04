@@ -105,15 +105,15 @@ public class RestController {
 			//已经签过到，不做任何处理
 			message="2";
 		}else{
-			LhSAccountEntity lhSAccount=lhSAccountService.getByAppId(appId);
-			double distance = LocationUtils.getDistance(Double.valueOf(lat),Double.valueOf(lng), Double.valueOf(lhSAccount.getLat()), Double.valueOf(lhSAccount.getLng()));
-			if(distance>100){
-				message="3";
-			}else{
+//			LhSAccountEntity lhSAccount=lhSAccountService.getByAppId(appId);
+//			double distance = LocationUtils.getDistance(Double.valueOf(lat),Double.valueOf(lng), Double.valueOf(lhSAccount.getLat()), Double.valueOf(lhSAccount.getLng()));
+//			if(distance>100){
+//				message="3";
+//			}else{
 				entity.setTime(new Date());
 				signinDateService.insert(entity);//加入今日签到数据
 				message="1";
-			}
+//			}
 		}
 		
 		return message;

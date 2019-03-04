@@ -36,4 +36,7 @@ SET
 	   <#if lhQuestion.remark ?exists>
 		   REMARK = :lhQuestion.remark,
 		</#if>
+	   <#if lhQuestion.analysis ?exists>
+		   analysis = :lhQuestion.analysis,
+		</#if>
 WHERE id = :lhQuestion.id

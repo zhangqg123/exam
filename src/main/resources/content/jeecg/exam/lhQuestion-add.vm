@@ -20,6 +20,9 @@
 					<form class="form-horizontal" role="form" id="dailogForm" action="$!{basePath}/jeecg/lhQuestion.do?doAdd" method="POST">
 						<input type="hidden" id="btn_sub" class="btn_sub" />
 						<input type="hidden" name="chooseAnswer" id="chooseAnswer" />
+						<textarea name="subject" id="subject" style="display:none;">$!{lhQuestion.subject}</textarea>
+						<textarea name="analysis" id="analysis" style="display:none;">$!{lhQuestion.analysis}</textarea>
+						<input type="hidden" value="" name="qtype" id="qtype" />
 									<div class="form-group mno">
 										<label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">考题类型</label>
 										<div class="col-sm-8">
@@ -36,21 +39,13 @@
 											<input type="text" value="$!{lhQuestion.summary}" name="summary" id="summary" class="form-control" datatype="*" />
 										</div>
 									</div>	
-									<div class="form-group mno">
-										<label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">题目内容</label>
-										<div class="col-sm-8">
-									<!--		<input type="text" value="$!{lhQuestion.subject}" name="subject" id="subject" class="form-control" datatype="*"/>	-->
-            								<textarea name="subject" id="subject" style="height:300px"></textarea>
-            							    <script type="text/javascript">
-                                                var editor = UE.getEditor('subject', {
-                                                    toolbars: [[
-                                                        'fullscreen', 'source', '|',
-                                                        'bold', 'italic', 'underline', '|', 'fontsize', '|', 'simpleupload', 'insertimage', 'emotion','|', 'scrawl', 'insertvideo', 'music', 'attachment','kityformula', 'preview'
-                                                    ]]
-                                                });		
-            								</script>
-										</div>
-									</div>
+								<div class="form-group mno">
+								    <label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">题目内容</label>
+								    <div class="col-sm-7" id="preSubject">
+										$!{lhQuestion.subject}
+								    </div>
+                                    <div class="col-sm-1"><button type="button" class="btn btn-primary" onclick="popEditor('试题编辑','subject');" ><i class="fa fa-plus"></i> 编辑</button> </div>
+								</div>	
 									<div id="answers">
     									#foreach($choose in ["A","B","C","D"])
     									<div class="form-group mno">
@@ -113,6 +108,15 @@
 											<input type="text" value="$!dateTool.format("yyyy-MM-dd",$!{lhQuestion.createDate})" name="createDate" id="createDate" class="form-control" onFocus="WdatePicker({dateFmt:'yyyy-MM-dd'})"   style="background: url('$!{basePath}/plug-in-ui/images/datetime.png') no-repeat scroll right center transparent;" />
 										</div>
 									</div> 	-->
+								<div class="form-group mno">
+								    <label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">题目解析</label>
+								    <div class="col-sm-7" id="preAnalysis">
+										$!{lhQuestion.analysis}
+								    </div>
+                                    <div class="col-sm-1">
+										<button type="button" class="btn btn-primary" onclick="popEditor('解析编辑','analysis');" ><i class="fa fa-plus"></i> 编辑</button> 
+									</div>
+								</div>	
 									<div class="form-group mno">
 										<label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">备注</label>
 										<div class="col-sm-8">
@@ -124,9 +128,49 @@
 			</div>
 		</div>
 	</div>
+    <!-- Modal -->
+    <div class="modal fade" id="privilegeTreeModal" tabindex="-1" role="dialog"
+    	aria-labelledby="privilegeTreeModalLabel" aria-hidden="true">
+    	<div class="modal-dialog">
+    		<div class="modal-content" style="width: 170%;left: -35%;">
+    			<div class="modal-header">
+    				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    				<h4 class="modal-title" id="privilegeTreeModalLabel"></h4>
+    			</div>
+    			<div class="modal-body">
+					<textarea name="qeditor" id="qeditor" style="height:200px"></textarea>
+				    <script type="text/javascript">
+                        qeditor = UE.getEditor('qeditor', {
+                            toolbars: [[
+                                'fullscreen', 'source', '|',
+                                'bold', 'italic', 'underline', '|', 'fontsize', '|', 'simpleupload', 'insertimage', 'emotion','|', 'scrawl', 'insertvideo', 'music', 'attachment','kityformula', 'preview'
+                            ]]
+                        });		
+				    </script>
+    			</div>
+    			<div class="modal-footer">
+    				<button type="button" class="btn btn-default" id="dialogFormClose" data-dismiss="modal">关闭</button>
+    				<button type="button" class="btn btn-default" onclick="getContent();" data-dismiss="modal">确定</button>
+    			</div>
+    		</div><!-- /.modal-content -->
+    	</div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
 </body>
 </html>
 <script>
+var qeditor;
+$(function(){
+    $("#answers").show();
+	$("#type").change(function(){
+		var isFormula = $(this).val();
+    	if(isFormula == "normal") {
+    		$("#answers").show();
+    	 } 
+		if(isFormula == "formula") {
+    		$("#answers").hide();
+    	}
+    });
+});
 function preSubmit() {
 	if($("#type").val()=="normal"){
     	var tmp="";
@@ -147,22 +191,32 @@ function isEmpty(obj){
         return false;
     }
 }
+function popEditor(title,type){
+	$('#privilegeTreeModalLabel').html(title);
+	var content;
+	if(type=="subject"){
+		$("#qtype").val(type);
+		content=$("#subject").val();
+		qeditor.setContent(content);
+	}
+	if(type=="analysis"){
+		$("#qtype").val(type);
+		content=$("#analysis").val();
+		qeditor.setContent(content);
+	}
+	$('#privilegeTreeModal').modal({show:true,backdrop:false});
+}
+function getContent() {
+	var qtype=$("#qtype").val();
+	if(qtype=="subject"){
+        $("#preSubject").html(qeditor.getContent());
+    	$("#subject").val(qeditor.getContent());
+	}
+	if(qtype=="analysis"){
+        $("#preAnalysis").html(qeditor.getContent());
+    	$("#analysis").val(qeditor.getContent());
+	}
+}
 </script>
 <script type="text/javascript" src="$!{basePath}/plug-in-ui/js/Validform_v5.3.2.js"></script> 
 <script type="text/javascript" src="$!{basePath}/plug-in-ui/js/forminit.p3.js"></script> 
-<script>
-
-	$(function(){
-        $("#answers").show();
-		$("#type").change(function(){
-			var isFormula = $(this).val();
-        	if(isFormula == "normal") {
-        		$("#answers").show();
-        	 } 
-			if(isFormula == "formula") {
-        		$("#answers").hide();
-        	}
-        });
-	});
-
-</script>

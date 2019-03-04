@@ -46,3 +46,7 @@
 		    /* 备注 */
 			and lq.REMARK = :lhQuestion.remark
 		</#if>
+		<#if ( lhQuestion.analysis )?? && lhQuestion.analysis ?length gt 0>
+		    /* 备注 */
+			and lq.analysis = :lhQuestion.analysis
+		</#if>
