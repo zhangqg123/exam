@@ -40,7 +40,6 @@ public class RestController {
 	private SigninDateService signinDateService;
 	
 	@RequestMapping("/getOpenid")
-//	@RequestMapping(params="getOpenid",method = RequestMethod.GET)
 	@ResponseBody
 	public String getOpenid(String jscode,String xcxId){
 		//微信小程序id
